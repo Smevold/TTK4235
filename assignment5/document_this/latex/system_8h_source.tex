@@ -1,0 +1,26 @@
+\doxysection{system.\+h}
+\hypertarget{system_8h_source}{}\label{system_8h_source}\index{source/system.h@{source/system.h}}
+\mbox{\hyperlink{system_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SYSTEM\_H}}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SYSTEM\_H}}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00012}\mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{00012}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00013}00013\ \ \ \ \ Classic\_Ziegler\_Nichols,\ \textcolor{comment}{/*<\ Ziegler\ Nichols\ */}}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00014}00014\ \ \ \ \ Pessen\_Integral\_Rule\ \textcolor{comment}{/*<\ Pessen\ */}}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00015}00015\ \}\ \mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{Tuning}};}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00020}\mbox{\hyperlink{structSystem}{00020}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{double}\ Ku;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00022}\mbox{\hyperlink{structSystem_a35042acb20cc2f329be781063d1b7f18}{00022}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structSystem_a35042acb20cc2f329be781063d1b7f18}{Tu}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00023}\mbox{\hyperlink{structSystem_a8d3ab4a5d0de7a97ec93dccb1d576b23}{00023}}\ \ \ \ \ \mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{Tuning}}\ \mbox{\hyperlink{structSystem_a8d3ab4a5d0de7a97ec93dccb1d576b23}{tuning\_method}};\ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00024}00024\ \}\ \mbox{\hyperlink{structSystem}{System}};}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00033}00033\ \mbox{\hyperlink{structSystem}{System}}\ *\ \mbox{\hyperlink{system_8h_a9498fc506100b388a8cca347628c2ade}{system\_create}}(\textcolor{keywordtype}{double}\ Ku,\ \textcolor{keywordtype}{double}\ Tu,\ \mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{Tuning}}\ tuning\_method);}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00040}00040\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{system_8h_adab9a110141ccce185af981adbc62515}{system\_delete}}(\mbox{\hyperlink{structSystem}{System}}\ *\ system\_current);}
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{system_8h_source_l00042}00042\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

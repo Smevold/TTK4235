@@ -1,0 +1,46 @@
+\doxysection{calculations.\+c}
+\hypertarget{calculations_8c_source}{}\label{calculations_8c_source}\index{source/calculations.c@{source/calculations.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{calculations_8h}{calculations.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00003}00003\ \textcolor{comment}{//\ These\ functions\ calculate\ the\ heuristic\ tuning\ parameters}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00004}00004\ \textcolor{comment}{//\ for\ a\ PID\ controller\ according\ to\ either\ the\ classical}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00005}00005\ \textcolor{comment}{//\ Ziegler\ Nichols\ rule,\ or\ the\ Pessens\ Integral\ Rule.}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00006}\mbox{\hyperlink{calculations_8h_a65260419923f28d94cb9893c780a5af3}{00006}}\ \textcolor{keywordtype}{double}\ calculate\_P\_parameter(\mbox{\hyperlink{structSystem}{System}}\ *\ current\_system)\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00007}00007\ \ \ \ \ \textcolor{keywordtype}{double}\ P\_parameter;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00008}00008\ \ \ \ \ \textcolor{keywordflow}{if}(current\_system-\/>\mbox{\hyperlink{structSystem_a8d3ab4a5d0de7a97ec93dccb1d576b23}{tuning\_method}}\ ==\ Classic\_Ziegler\_Nichols)\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00009}00009\ \ \ \ \ \ \ \ \ P\_parameter\ =\ 0.6\ *\ current\_system-\/>Ku;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00010}00010\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00012}00012\ \ \ \ \ \ \ \ \ P\_parameter\ =\ 0.7\ *\ current\_system-\/>Ku;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00013}00013\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{return}\ P\_parameter;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00016}00016\ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00018}\mbox{\hyperlink{calculations_8h_ad587231ab5fd7e00c09645eac6cffd60}{00018}}\ \textcolor{keywordtype}{double}\ calculate\_I\_parameter(\mbox{\hyperlink{structSystem}{System}}\ *\ current\_system)\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{double}\ I\_parameter;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{if}(current\_system-\/>\mbox{\hyperlink{structSystem_a8d3ab4a5d0de7a97ec93dccb1d576b23}{tuning\_method}}\ ==\ Classic\_Ziegler\_Nichols)\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00021}00021\ \ \ \ \ \ \ \ \ I\_parameter\ =\ 0.5\ *\ current\_system-\/>\mbox{\hyperlink{structSystem_a35042acb20cc2f329be781063d1b7f18}{Tu}};}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00022}00022\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00024}00024\ \ \ \ \ \ \ \ \ I\_parameter\ =\ 0.4\ *\ current\_system-\/>\mbox{\hyperlink{structSystem_a35042acb20cc2f329be781063d1b7f18}{Tu}};}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{return}\ I\_parameter;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00030}\mbox{\hyperlink{calculations_8h_a8f20770a71d65ff426630b2e09496a4c}{00030}}\ \textcolor{keywordtype}{double}\ calculate\_D\_parameter(\mbox{\hyperlink{structSystem}{System}}\ *\ current\_system)\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00031}00031\ \ \ \ \ \textcolor{keywordtype}{double}\ D\_parameter;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{if}(current\_system-\/>\mbox{\hyperlink{structSystem_a8d3ab4a5d0de7a97ec93dccb1d576b23}{tuning\_method}}\ ==\ Classic\_Ziegler\_Nichols)\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00033}00033\ \ \ \ \ \ \ \ \ D\_parameter\ =\ 0.125\ *\ current\_system-\/>\mbox{\hyperlink{structSystem_a35042acb20cc2f329be781063d1b7f18}{Tu}};}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00036}00036\ \ \ \ \ \ \ \ \ D\_parameter\ =\ 0.15\ *\ current\_system-\/>\mbox{\hyperlink{structSystem_a35042acb20cc2f329be781063d1b7f18}{Tu}};}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00037}00037\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{return}\ D\_parameter;}
+\DoxyCodeLine{\Hypertarget{calculations_8c_source_l00040}00040\ \}}
+
+\end{DoxyCode}

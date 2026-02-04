@@ -1,0 +1,51 @@
+\doxysection{source/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{source/main.c@{source/main.c}}
+
+
+The main file of the application.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}memory\+\_\+library.\+h"{}}\newline
+Include dependency graph for main.\+c\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a9cb6888d54a1eb3f5a4bf33bac656206}{print\+\_\+buffer}} (int \texorpdfstring{$\ast$}{*}p\+\_\+buffer, int size)
+\item 
+int \mbox{\hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main file of the application. 
+
+
+
+Definition in file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00017}{17}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a9cb6888d54a1eb3f5a4bf33bac656206}\label{main_8c_a9cb6888d54a1eb3f5a4bf33bac656206} 
+\index{main.c@{main.c}!print\_buffer@{print\_buffer}}
+\index{print\_buffer@{print\_buffer}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{print\_buffer()}{print\_buffer()}}
+{\footnotesize\ttfamily void print\+\_\+buffer (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{p\+\_\+buffer,  }\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00009}{9}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+

@@ -1,0 +1,27 @@
+\doxysection{main.\+c}
+\hypertarget{main_8c_source}{}\label{main_8c_source}\index{source/main.c@{source/main.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{system_8h}{system.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{calculations_8h}{calculations.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00006}00006\ \textcolor{keywordtype}{int}\ main()\{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00007}00007\ \ \ \ \ \mbox{\hyperlink{structSystem}{System}}\ *\ current\_system\ =\ system\_create(12.1,\ 73.0,\ Pessen\_Integral\_Rule);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00009}00009\ \ \ \ \ \textcolor{keywordtype}{double}\ P\_parameter,\ I\_parameter,\ D\_parameter;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ tuning\_methods[]\ =\ \{\textcolor{stringliteral}{"{}Classic-\/Ziegler-\/Nichols"{}},\textcolor{stringliteral}{"{}Pessens\ Integral\ Rule"{}}\};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00012}00012\ \ \ \ \ P\_parameter\ =\ calculate\_P\_parameter(current\_system);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00013}00013\ \ \ \ \ I\_parameter\ =\ calculate\_I\_parameter(current\_system);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00014}00014\ \ \ \ \ D\_parameter\ =\ calculate\_D\_parameter(current\_system);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00016}00016\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Given\ Ku\ =\ \%f\ and\ Tu\ =\ \%f,\ the\ optimal\ PID\ parameters\ when\ using\ \%s\ are:\(\backslash\)nKp\ =\ \%f,\ Ki\ =\ \%f\ and\ Kd\ =\ \%f\(\backslash\)n"{}},\(\backslash\)}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ current\_system-\/>Ku,current\_system-\/>\mbox{\hyperlink{structSystem_a35042acb20cc2f329be781063d1b7f18}{Tu}},tuning\_methods[current\_system-\/>\mbox{\hyperlink{structSystem_a8d3ab4a5d0de7a97ec93dccb1d576b23}{tuning\_method}}],P\_parameter,I\_parameter,D\_parameter);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00019}00019\ \ \ \ \ system\_delete(current\_system);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00021}00021\ \}}
+
+\end{DoxyCode}
