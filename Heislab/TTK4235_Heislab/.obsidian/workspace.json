@@ -11,14 +11,12 @@
             "id": "e2fadccbf61e46db",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "Oversikt.md",
-                "mode": "source",
-                "source": false
+                "file": "PDF/TTK4235_Lab_2_Heisprosjekt.pdf"
               },
-              "icon": "lucide-file",
-              "title": "Oversikt"
+              "icon": "lucide-file-text",
+              "title": "TTK4235_Lab_2_Heisprosjekt"
             }
           }
         ]
@@ -183,17 +181,16 @@
       "bases:Create new base": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-excalidraw-plugin:New drawing": false,
-      "gpt3-notes:GPT-3 Notes": false,
       "obsidian-kanban:Create new board": false
     }
   },
   "active": "e2fadccbf61e46db",
   "lastOpenFiles": [
-    "PDF",
-    "PDF/TTK4235_Lab_2_Heisprosjekt.pdf",
     "Help/Latex suite.md",
-    "Help",
+    "PDF/TTK4235_Lab_2_Heisprosjekt.pdf",
     "Oversikt.md",
+    "PDF",
+    "Help",
     "Welcome.md",
     "desktop.ini"
   ]
