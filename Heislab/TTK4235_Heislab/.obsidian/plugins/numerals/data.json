@@ -1,0 +1,22 @@
+{
+  "resultSeparator": " → ",
+  "layoutStyle": "TwoPanes",
+  "alternateRowColor": true,
+  "defaultRenderStyle": "TeX",
+  "hideLinesWithoutMarkupWhenEmitting": true,
+  "hideEmitterMarkupInInput": true,
+  "dollarSymbolCurrency": {
+    "symbol": "$",
+    "currency": "USD"
+  },
+  "yenSymbolCurrency": {
+    "symbol": "¥",
+    "currency": "JPY"
+  },
+  "provideSuggestions": true,
+  "suggestionsIncludeMathjsSymbols": true,
+  "numberFormat": "Engineering",
+  "forceProcessAllFrontmatter": false,
+  "customCurrencySymbol": null,
+  "enableGreekAutoComplete": true
+}
