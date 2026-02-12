@@ -1,0 +1,97 @@
+\doxysection{source/system.h File Reference}
+\hypertarget{system_8h}{}\label{system_8h}\index{source/system.h@{source/system.h}}
+
+
+Definition for created types.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structSystem}{System}}
+\begin{DoxyCompactList}\small\item\em A structure to represent a system and desired PID tuning method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{Tuning}} \{ {\bfseries Classic\+\_\+\+Ziegler\+\_\+\+Nichols}
+, {\bfseries Pessen\+\_\+\+Integral\+\_\+\+Rule}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum of tuning rules. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structSystem}{System}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{system_8h_a9498fc506100b388a8cca347628c2ade}{system\+\_\+create}} (double Ku, double Tu, \mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{Tuning}} tuning\+\_\+method)
+\begin{DoxyCompactList}\small\item\em Creates a new pointer with type \doxylink{structSystem}{System}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{system_8h_adab9a110141ccce185af981adbc62515}{system\+\_\+delete}} (\mbox{\hyperlink{structSystem}{System}} \texorpdfstring{$\ast$}{*}system\+\_\+current)
+\begin{DoxyCompactList}\small\item\em Frees up memory and deletes the values of the current system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Definition for created types. 
+
+
+
+Definition in file \mbox{\hyperlink{system_8h_source}{system.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{system_8h_aed7f5186d416224e26c97bc9978aac47}\label{system_8h_aed7f5186d416224e26c97bc9978aac47} 
+\index{system.h@{system.h}!Tuning@{Tuning}}
+\index{Tuning@{Tuning}!system.h@{system.h}}
+\doxysubsubsection{\texorpdfstring{Tuning}{Tuning}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{Tuning}}}
+
+
+
+Enum of tuning rules. 
+
+
+
+Definition at line \mbox{\hyperlink{system_8h_source_l00012}{12}} of file \mbox{\hyperlink{system_8h_source}{system.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{system_8h_a9498fc506100b388a8cca347628c2ade}\label{system_8h_a9498fc506100b388a8cca347628c2ade} 
+\index{system.h@{system.h}!system\_create@{system\_create}}
+\index{system\_create@{system\_create}!system.h@{system.h}}
+\doxysubsubsection{\texorpdfstring{system\_create()}{system\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structSystem}{System}} \texorpdfstring{$\ast$}{*} system\+\_\+create (\begin{DoxyParamCaption}\item[{double}]{Ku,  }\item[{double}]{Tu,  }\item[{\mbox{\hyperlink{system_8h_aed7f5186d416224e26c97bc9978aac47}{Tuning}}}]{tuning\+\_\+method }\end{DoxyParamCaption})}
+
+
+
+Creates a new pointer with type \doxylink{structSystem}{System}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Ku} & The value of the systems open loop gain \\
+\hline
+\mbox{\texttt{ in}}  & {\em Tu} & The value of the systems open loop time-\/constant \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{system_8c_source_l00006}{6}} of file \mbox{\hyperlink{system_8c_source}{system.\+c}}.
+
+\Hypertarget{system_8h_adab9a110141ccce185af981adbc62515}\label{system_8h_adab9a110141ccce185af981adbc62515} 
+\index{system.h@{system.h}!system\_delete@{system\_delete}}
+\index{system\_delete@{system\_delete}!system.h@{system.h}}
+\doxysubsubsection{\texorpdfstring{system\_delete()}{system\_delete()}}
+{\footnotesize\ttfamily void system\+\_\+delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSystem}{System}} \texorpdfstring{$\ast$}{*}}]{system\+\_\+current }\end{DoxyParamCaption})}
+
+
+
+Frees up memory and deletes the values of the current system. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em system\+\_\+current} & The system that gets deleted and memory freed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{system_8c_source_l00020}{20}} of file \mbox{\hyperlink{system_8c_source}{system.\+c}}.
+
