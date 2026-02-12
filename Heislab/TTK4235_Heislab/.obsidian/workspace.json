@@ -184,12 +184,57 @@
       "obsidian-kanban:Create new board": false
     }
   },
+  "floating": {
+    "id": "f059a20fb0ff861e",
+    "type": "floating",
+    "children": [
+      {
+        "id": "9dbd9a1cdbca78e7",
+        "type": "window",
+        "children": [
+          {
+            "id": "b9ec077192fa3df7",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "271bfa913a0f596d",
+                "type": "leaf",
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "PDF/TTK4235_Lab_2_Heisprosjekt.pdf"
+                  },
+                  "icon": "lucide-file-text",
+                  "title": "TTK4235_Lab_2_Heisprosjekt"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 768,
+        "y": 0,
+        "width": 768,
+        "height": 912,
+        "maximize": false,
+        "zoom": 0
+      }
+    ]
+  },
   "active": "e2fadccbf61e46db",
   "lastOpenFiles": [
+<<<<<<< HEAD
     "Help/Latex suite.md",
     "PDF/TTK4235_Lab_2_Heisprosjekt.pdf",
     "Oversikt.md",
     "PDF",
+=======
+    "PDF/TTK4235_Lab_2_Heisprosjekt.pdf",
+    "Kanban.md",
+    "Viktige Datoer.md",
+    "PDF",
+    "Help/Latex suite.md",
+>>>>>>> 1cdae1619148c1da629d47b1863d8a5d5958d68d
     "Help",
     "Welcome.md",
     "desktop.ini"
