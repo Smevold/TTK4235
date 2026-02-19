@@ -23,11 +23,13 @@ kanban-plugin: board
 
 - [x] Arkitekturdiagram
 - [x] Klassediagram
-- [ ] Sekvensdiagram
+- [x] Sekvensdiagram
 
 
 ## Moduldesign
 
+- [ ] Klassediagrammer
+- [ ] Tilstandsdiagrammer
 
 
 ## Implementasjon
