@@ -29,6 +29,7 @@ kanban-plugin: board
 ## Moduldesign
 
 - [ ] Test
+- [ ] TESTER
 
 
 ## Implementasjon
