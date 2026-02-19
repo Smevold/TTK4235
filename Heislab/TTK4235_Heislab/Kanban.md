@@ -31,6 +31,7 @@ kanban-plugin: board
 - [ ] Test
 - [ ] TESTER
 - [ ] Test 2
+- [ ] TEST NUMMER 3
 
 
 ## Implementasjon
