@@ -1,0 +1,42 @@
+@startuml
+
+[*] --> state_startUp : elev_startUp() / elevio_init()
+
+state startUp <<choice>>
+
+state_startUp --> startUp
+startUp --> state_startUp : elevio_stopButton() = 0 \n/ elevio_motorDirection(-1)
+startUp --> state_startUp : elevio_stopButton() = 1 \n/ elevio_motorDirection(0)
+
+state_startUp --> state_stationary : elevio_floorSensor() != 0
+
+
+state_stationary --> state_stationary : em_nextFloor()=0
+
+state_stationary : do / elevio_motorDirection(0) \ndo / em_getNextFloor()
+
+state_stationary --> state_move : em_nextFloor() != 0 \n[ != em_currentFloor] \n [sm_evStop() = False]
+
+state state_move {
+    state state_readyToMove <<choice>>
+    [*] --> state_readyToMove
+    state_readyToMove --> state_moveUp : em_nextFloor() > em_currentFloor \n [sm_evObstruction() = False] 
+    state_readyToMove --> state_moveDown : em_nextFloor() < em_currentFloor \n [sm_evObstruction() = False]
+
+    state_moveUp : enter / elevio_motorDirection(1)
+    state_moveDown : enter / elevio_motorDirection(-1)
+
+    ||
+    [*] --> state_updateNextFloor
+    state_updateNextFloor : do / em_getNextFloor()
+
+}
+
+state_move --> state_openDoor : elevio_floorSensor() = em_nextFloor
+state_openDoor : enter / timer_start(3) \ndo / elevio_motorDirection(0)
+state_openDoor --> state_stationary : timer_isTimeOut() \n [em_evObstruction = False]
+
+state_openDoor --> state_openDoor : sm_evStop() / timer_reset()
+
+state_move --> state_stationary : sm_evStop()
+@enduml
