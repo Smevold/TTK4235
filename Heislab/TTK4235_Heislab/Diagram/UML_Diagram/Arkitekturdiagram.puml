@@ -1,0 +1,40 @@
+@startuml Arkitekturdiagram
+
+skinparam ComponentStyle rectangle
+
+[Tilstandsmaskin] <--> [Eventmanager]
+[Eventmanager] <- [Etasje-knapper]
+[Aktuatorer] <- [Tilstandsmaskin]
+[Tilstandsmaskin] -> [Lys]
+[Sensorer] --> [Tilstandsmaskin]
+
+note top of Sensorer
+    Etasje-sensorer
+    Obstruksjoner
+    Stopp-knapp
+end note
+
+note top of Tilstandsmaskin
+    Der alle hovedtingene skjer
+    Outputs basert på inputs
+end note
+
+note right of Lys
+    Outputs i form av lys
+end note
+
+note right of [Etasje-knapper]
+    Knappene som bestiller heisen
+    Hvor den skal gå
+end note
+
+note left of [Eventmanager]
+    Den som holder kontroll over
+    hvilke etasjer som er i køen
+end note
+
+note top of Aktuatorer
+    Motor
+end note
+
+@enduml
