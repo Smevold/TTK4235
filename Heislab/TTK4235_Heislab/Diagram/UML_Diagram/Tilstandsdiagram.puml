@@ -1,4 +1,4 @@
-@startuml
+@startuml Tilstandsdiagram
 
 [*] --> state_startUp : elev_startUp() / elevio_init()
 

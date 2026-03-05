@@ -1,11 +1,72 @@
-@startuml
+@startuml Klassediagram
 
 skinparam ClassAttributeIconSize 0
 
--class Event_Manager {
+class Event_Manager {
     + em_cue : Int[*]
-    + em_nextFloor: Int
-    + em_currentFloor: Int
+    + em_nextFloor : Int
+    + em_currentFloor : Int
+    - em_getNextFloor() : Int
 }
+
+class Tilstandsmaskin {
+    - state
+    + sm_evStop()
+    + sm_evObstruction()
+    + sm_evNoOrders()
+    + sm_evDoorOpen()
+}
+
+class Aktuator {
+    + MotorDirection : enum[3]
+    + elevio_motorDirection(dirn: MotorDirection)
+}
+
+class Elevator{
+    - main()
+    - elevio_init()
+    - elev_startUp()
+}
+
+class Sensorer{
+    + elevio_floorSensor(): int
+    + elevio_stopButton(): int
+    + elevio_obstruction(): int
+}
+
+class Timer{
+    - timer_time: int
+    + timer_start()
+    + timer_isTimeOut()
+    + timer_reset()
+}
+
+class Lys{
+    + N_FLOORS : int = 4
+    + elevio_buttonLamp(floor: int, button: ButtonType, value: int)
+    + elevio_floorIndicator(floor: int)
+    + elevio_doorOpenLamp(value: int)
+    + elveio_stopLamp(value: int)
+}
+
+class Etasje_Knapp{
+    + ButtonType : enum[3]
+    + N_BUTTONS : int = 3
+    + elevio_callButton(floor: int, button: ButtonType) : int
+}
+
+Tilstandsmaskin <-- Event_Manager 
+
+Aktuator -> Tilstandsmaskin
+Aktuator --> Event_Manager
+
+Tilstandsmaskin <- Lys
+
+Event_Manager <- Etasje_Knapp
+Lys <-- Etasje_Knapp
+
+Timer --> Tilstandsmaskin
+Sensorer --> Tilstandsmaskin
+Elevator --> Tilstandsmaskin
 
 @enduml
