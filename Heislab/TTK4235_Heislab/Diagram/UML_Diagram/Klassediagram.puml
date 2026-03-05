@@ -1,0 +1,11 @@
+@startuml
+
+skinparam ClassAttributeIconSize 0
+
+-class Event_Manager {
+    + em_cue : Int[*]
+    + em_nextFloor: Int
+    + em_currentFloor: Int
+}
+
+@enduml

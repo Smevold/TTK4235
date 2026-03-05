@@ -2,14 +2,9 @@
 
 [*] --> state_startUp : elev_startUp() / elevio_init()
 
-state startUp <<choice>>
-
-state_startUp --> startUp
-startUp --> state_startUp : elevio_stopButton() = 0 \n/ elevio_motorDirection(-1)
-startUp --> state_startUp : elevio_stopButton() = 1 \n/ elevio_motorDirection(0)
+state_startUp : do / elevio_motorDirection(-1) \nelevio_stopButton() = 1 / elevio_motorDirection(0)
 
 state_startUp --> state_stationary : elevio_floorSensor() != 0
-
 
 state_stationary --> state_stationary : em_nextFloor()=0
 
@@ -34,9 +29,10 @@ state state_move {
 
 state_move --> state_openDoor : elevio_floorSensor() = em_nextFloor
 state_openDoor : enter / timer_start(3) \ndo / elevio_motorDirection(0)
-state_openDoor --> state_stationary : timer_isTimeOut() \n [em_evObstruction = False]
+state_openDoor : sm_evStop() / timer_reset()\nem_evObstruction() / timer_reset()
 
-state_openDoor --> state_openDoor : sm_evStop() / timer_reset()
+
+state_openDoor --> state_stationary : timer_isTimeOut()\n[em_evObstruction = False]\n[sm_evStop = False]
 
 state_move --> state_stationary : sm_evStop()
 @enduml
