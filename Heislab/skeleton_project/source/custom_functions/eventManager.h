@@ -9,13 +9,20 @@
 
 /**
 * @brief Sjekker hvilke knakker som blir trykket
-* @param[out] f Hvilken etasje som har blitt trykket på, der @p f er nullindeksert
+* @param[out] f Hvilken etasje som har blitt trykket på, @p f er nullindeksert
 *
 * @warning Dersom @p f er lik -1, skal dette telle som at ingen etasjeknapp er trykket på
 */
-int ioTest_getNextFloor();
+int em_checkBtnPressed();
 
 /**
-* @brief Sjekker hvilken etasje heisen er i
+* @brief Sjekker hvilken etasje heisen er i. Nullindeksert
+* @param[out]
+*  @warning Dersom heisen er mellom etasjer, vil den returnere -1
 */
-int ioTest_getCurrentFloor();
+int em_getCurrentFloor();
+
+/**
+* @brief Genererer etasjerekkefølge basert på 
+*/
+int em_getNextFloor();

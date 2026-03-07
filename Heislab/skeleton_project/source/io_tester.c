@@ -103,7 +103,9 @@ int main() {
 }
 
 
-/* int main(){
+/* Original main som fulgte med filen
+    
+    int main(){
     elevio_init();
     
     printf("=== Example Program ===\n");
