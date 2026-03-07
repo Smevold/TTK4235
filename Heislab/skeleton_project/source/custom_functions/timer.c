@@ -1,6 +1,6 @@
 #include "timer.h"
 #include <time.h>
-#include <stdio.h>
+// #include <stdio.h>
 
 void timer_start(clock_t* pt_start,clock_t* pt_end){
     *pt_start = clock() / CLOCKS_PER_SEC;
