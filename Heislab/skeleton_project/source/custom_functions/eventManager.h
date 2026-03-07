@@ -8,6 +8,12 @@
 */
 
 /**
+* @brief Sletter hele kø-en til Event Manageren
+* @param[in] em_queue Peker til køen som programmet bruker til å finne neste etasje
+*/
+void em_clear(int *em_queue);
+
+/**
 * @brief Sjekker hvilke knakker som blir trykket
 * @param[out] f Hvilken etasje som har blitt trykket på, @p f er nullindeksert
 *
