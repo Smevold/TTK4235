@@ -12,9 +12,9 @@ int main (){
 
     int test = state_openDoor();
     if (test == 1) {
-        printf("Hurray");
+        printf("Hurray\n");
     } else {
-        printf("BUUUU");
+        printf("BUUUU\n");
     }
 
     while(1) {

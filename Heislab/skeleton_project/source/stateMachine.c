@@ -7,6 +7,7 @@
 
 #include "custom_functions/timer.h"
 #include "driver/elevio.h"
+#include "custom_functions/eventManager.h"
 
 #define NEXTFLOOR 1
 
@@ -37,10 +38,11 @@ void state_startUp(){
 
 // Tilstand hvor heisen står stille
 int state_stationary(){
+    int em_nextFloor, em_currentFloor;
     while (1) {
         elevio_motorDirection(DIRN_STOP);
-        int em_nextFloor = NEXTFLOOR; //Hent neste etasje fra EM
-        int em_currentFloor = elevio_floorSensor(); // Hent current floor fra EM
+        em_nextFloor = em_getNextFloor();
+        em_currentFloor = elevio_floorSensor(); // Hent current floor fra EM
 
         if (elevio_stopButton() == 1) {
             // Clear EM
@@ -55,7 +57,7 @@ int state_stationary(){
 }
 
 int state_move(){
-    int em_nextFloor = NEXTFLOOR; //Hent neste etasje fra EM
+    int em_nextFloor = em_getNextFloor();
     int em_currentFloor = elevio_floorSensor(); // Hent current floor fra EM
 
     while (em_nextFloor > em_currentFloor) {
@@ -67,7 +69,7 @@ int state_move(){
             elevio_motorDirection(DIRN_STOP);
             return 1;
         }
-        em_nextFloor = NEXTFLOOR; //Hent neste etasje fra EM
+        em_nextFloor = em_getNextFloor();
     }
 
     while (em_nextFloor < em_currentFloor) {
@@ -79,7 +81,7 @@ int state_move(){
             elevio_motorDirection(DIRN_STOP);
             return 1;
         }
-        em_nextFloor = NEXTFLOOR; //Hent neste etasje fra EM
+        em_nextFloor = em_getNextFloor();
     }
     return 0;
 }
@@ -90,7 +92,9 @@ int state_openDoor(){
 
     timer_start(&t_start,&t_end);
 
-    printf("The time is now %lu", t_start);
+    elevio_motorDirection(DIRN_STOP);
+
+    printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start, t_end);
 
     int timeOut = timer_isTimeOut(&t_start, &t_end);
 
@@ -99,15 +103,15 @@ int state_openDoor(){
 
         if (elevio_stopButton() == 1) {
             timer_start(&t_start,&t_end);
-            printf("Stop Button activated");
+            printf("Stop Button activated\n");
             // Clear EM
         } else if (elevio_obstruction() == 1) {
             timer_start(&t_start,&t_end);
-            printf("obstruction activated");
+            printf("obstruction activated\n");
         }
 
     }
-    printf("Timer done");
+    printf("Timer done\n");
     return 1;
 }
 
