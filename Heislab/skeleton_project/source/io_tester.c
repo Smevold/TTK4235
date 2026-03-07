@@ -1,8 +1,3 @@
-/**
-* @file
-* @brief August tester og dokumenterer hvordan I/O-en til Heislab-en er satt opp. 
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -52,8 +47,8 @@ int ioTest_getNextFloor() {
         for(int b = 0; b < N_BUTTONS; b++) {
             int btnPressed = elevio_callButton(f,b);
             elevio_buttonLamp(f, b, btnPressed);
-            printf("f: %d, b: %d, btn: %d   |   \n", f, b, btnPressed);
             if(btnPressed == 1) {
+                printf("f: %d, b: %d, btn: %d   |   \n", f, b, btnPressed);
                 return f;
             }
         }
@@ -83,7 +78,6 @@ int main() {
             continue;
         } else if (ioTest_nextFloor > ioTest_currentFloor) {
             elevio_motorDirection(DIRN_UP);
-            printf("Why are you here");
         } else if (ioTest_nextFloor < ioTest_currentFloor) {
             elevio_motorDirection(DIRN_DOWN);
         } else {
