@@ -16,6 +16,7 @@ int em_checkBtnPressed() {
     return -1;
 }
 
+// Oppdater så den ikke oppdaterer ved -1
 int em_getCurrentFloor() {
     int floor = elevio_floorSensor();
     return floor;
