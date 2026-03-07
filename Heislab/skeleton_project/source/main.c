@@ -9,12 +9,15 @@
 int main (){
     int stop = 1;
     int em_queue[N_FLOORS];
-    int em_nextFloor = -1; int em_currentFloor = -1; int MotorDirection = 0;
+    int em_nextFloor = -1; int em_currentFloor = -1; int motorDirection = 0;
+
+    em_clear(em_queue);
+
     state_startUp();
 
-    int test = state_openDoor((&em_queue)[N_FLOORS], 
+    int test = state_openDoor(em_queue, 
         &em_nextFloor, &em_currentFloor, 
-        &MotorDirection
+        &motorDirection
     );
     if (test == 1) {
         printf("Hurray\n");
@@ -24,21 +27,21 @@ int main (){
 
     while(1) {
         while (stop != 1) {
-            stop = state_move((&em_queue)[N_FLOORS], 
+            stop = state_move(em_queue, 
                 &em_nextFloor, &em_currentFloor, 
-                &MotorDirection
+                &motorDirection
             );
             if (stop == 1) {
                 break;
             }
-            stop = state_openDoor((&em_queue)[N_FLOORS], 
+            stop = state_openDoor(em_queue, 
                 &em_nextFloor, &em_currentFloor, 
-                &MotorDirection
+                &motorDirection
             );
         }
-        stop = state_stationary((&em_queue)[N_FLOORS], 
+        stop = state_stationary(em_queue, 
             &em_nextFloor, &em_currentFloor, 
-            &MotorDirection
+            &motorDirection
         );
     }
 }

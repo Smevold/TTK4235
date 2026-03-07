@@ -8,6 +8,7 @@
 #include "custom_functions/timer.h"
 #include "driver/elevio.h"
 #include "custom_functions/eventManager.h"
+#include "custom_functions/smallerFunctions.h"
 
 /**
  * @file
@@ -27,7 +28,7 @@ void state_startUp();
  * @param[in] em_currentFloor er en pointer til etasjen heisen er i
  * @param[out] f brukes for å stoppe heisen der den er dersom den er 1.
  */
-int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *MotorDirection);
+int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection);
 
 /**
  * @brief Dette er tilstanden hvor heisen er i bevegelse.
@@ -37,7 +38,7 @@ int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int
  * @param[in] em_currentFloor er en pointer til etasjen heisen er i
  * @param[out] f brukes for å stoppe heisen der den er dersom den er 1.
  */
-int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *MotorDirection);
+int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection);
 
 /**
  * @brief Dette er tilstanden hvor heisen er stasjonær i en etasje med døren åpmet.
@@ -47,4 +48,4 @@ int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *Moto
  * @param[in] em_currentFloor er en pointer til etasjen heisen er i
  * @param[out] f brukes for å stoppe heisen der den er dersom den er 1.
  */
-int state_openDoor(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *MotorDirection);
+int state_openDoor(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection);
