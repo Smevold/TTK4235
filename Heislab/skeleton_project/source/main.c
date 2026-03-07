@@ -3,10 +3,33 @@
 #include <signal.h>
 #include <time.h>
 #include "driver/elevio.h"
+#include "stateMachine.h"
+#include <unistd.h>
 
+int main (){
+    int stop = 1;
+    state_startUp();
 
+    int test = state_openDoor();
+    if (test == 1) {
+        printf("Hurray");
+    } else {
+        printf("BUUUU");
+    }
 
-int main(){
+    while(1) {
+        while (stop != 1) {
+            stop = state_move();
+            if (stop == 1) {
+                break;
+            }
+            stop = state_openDoor();
+        }
+        stop = state_stationary();
+    }
+}
+
+/* int main(){
     elevio_init();
     
     printf("=== Example Program ===\n");
@@ -48,4 +71,4 @@ int main(){
     }
 
     return 0;
-}
+} */
