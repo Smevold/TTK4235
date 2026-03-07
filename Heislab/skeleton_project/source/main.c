@@ -1,16 +1,21 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <time.h>
+// #include <stdlib.h>
+// #include <signal.h>
+// #include <time.h>
 #include "driver/elevio.h"
 #include "stateMachine.h"
 #include <unistd.h>
 
 int main (){
     int stop = 1;
+    int em_queue[N_FLOORS];
+    int em_nextFloor = -1; int em_currentFloor = -1; int MotorDirection = 0;
     state_startUp();
 
-    int test = state_openDoor();
+    int test = state_openDoor((&em_queue)[N_FLOORS], 
+        &em_nextFloor, &em_currentFloor, 
+        &MotorDirection
+    );
     if (test == 1) {
         printf("Hurray\n");
     } else {
@@ -19,13 +24,22 @@ int main (){
 
     while(1) {
         while (stop != 1) {
-            stop = state_move();
+            stop = state_move((&em_queue)[N_FLOORS], 
+                &em_nextFloor, &em_currentFloor, 
+                &MotorDirection
+            );
             if (stop == 1) {
                 break;
             }
-            stop = state_openDoor();
+            stop = state_openDoor((&em_queue)[N_FLOORS], 
+                &em_nextFloor, &em_currentFloor, 
+                &MotorDirection
+            );
         }
-        stop = state_stationary();
+        stop = state_stationary((&em_queue)[N_FLOORS], 
+            &em_nextFloor, &em_currentFloor, 
+            &MotorDirection
+        );
     }
 }
 
