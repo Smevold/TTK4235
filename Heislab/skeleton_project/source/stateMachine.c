@@ -1,4 +1,6 @@
 #include "stateMachine.h"
+#include "custom_functions/eventManager.h"
+#include "custom_functions/smallerFunctions.h"
 
 #define NEXTFLOOR 1
 
@@ -28,16 +30,16 @@ void state_startUp(){
 }
 
 // Tilstand hvor heisen står stille
-int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *MotorDirection){
+int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
 
     while (1) {
-        elevio_motorDirection(DIRN_STOP);
+        mDirStop(motorDirection);
         em_getNextFloor(em_nextFloor);
         em_getCurrentFloor(em_currentFloor);
 
         if (elevio_stopButton() == 1) {
-            // Clear EM
-            state_openDoor(em_queue, em_nextFloor, em_currentFloor, MotorDirection);
+            em_clear(em_queue);
+            state_openDoor(em_queue, em_nextFloor, em_currentFloor, motorDirection);
         }
 
         if ((*em_nextFloor != -1) && (*em_nextFloor != *em_currentFloor)) {
@@ -48,43 +50,47 @@ int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int
 }
 
 // Tilstand hvor heisen beveger seg
-int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *MotorDirection){
+int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
 
     em_getNextFloor(em_nextFloor);
     em_getCurrentFloor(em_currentFloor);
 
     while (em_nextFloor > em_currentFloor) {
-        elevio_motorDirection(DIRN_UP);
-        if (elevio_floorSensor() != -1) {
-            em_getCurrentFloor(em_currentFloor);
-        }
+        mDirUp(motorDirection);
+
+        em_getCurrentFloor(em_currentFloor);
+
         if (elevio_stopButton() == 1) {
-            elevio_motorDirection(DIRN_STOP);
+            mDirStop(motorDirection);
             return 1;
         }
+
         em_getNextFloor(em_nextFloor);
     }
 
     while (em_nextFloor < em_currentFloor) {
-        elevio_motorDirection(DIRN_DOWN);
+        mDirDown(motorDirection);
+
         em_getCurrentFloor(em_currentFloor);
+
         if (elevio_stopButton() == 1) {
-            elevio_motorDirection(DIRN_STOP);
+            mDirStop(motorDirection);
             return 1;
         }
+
         em_getNextFloor(em_nextFloor);
     }
     return 0;
 }
 
 // Tilstand hvor heisen står stille med åpen dør
-int state_openDoor(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *MotorDirection){
+int state_openDoor(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
 
     clock_t t_start, t_end;
 
     timer_start(&t_start,&t_end);
 
-    elevio_motorDirection(DIRN_STOP);
+    mDirStop(motorDirection);
 
     printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start, t_end);
 
@@ -98,7 +104,7 @@ int state_openDoor(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *
         if (elevio_stopButton() == 1) {
             timer_start(&t_start,&t_end);
             printf("Stop Button activated\n");
-            // Clear EM
+            em_clear(em_queue);
         } else if (elevio_obstruction() == 1) {
             timer_start(&t_start,&t_end);
             printf("Obstruction activated\n");
