@@ -7,7 +7,6 @@ int em_checkBtnPressed() {
         for(int b = 0; b < N_BUTTONS; b++) {
             int btnPressed = elevio_callButton(f,b);
             elevio_buttonLamp(f, b, btnPressed);
-            printf("f: %d, b: %d, btn: %d   |   \n", f, b, btnPressed);
             if(btnPressed == 1) {
                 return f;
             }
@@ -16,15 +15,16 @@ int em_checkBtnPressed() {
     return -1;
 }
 
-// Oppdater så den ikke oppdaterer ved -1
-int em_getCurrentFloor() {
-    int floor = elevio_floorSensor();
-    return floor;
+void em_getCurrentFloor(int *currentFloor) {
+    int newFloor = elevio_floorSensor();
+    if (newFloor != -1) {
+        *currentFloor = newFloor;
+    }
 }
 
-int em_getNextFloor() {
-    int em_tempFloor = em_checkBtnPressed();
-    if (em_tempFloor != -1) {
-        int ioTest_nextFloor = em_tempFloor;
+void em_getNextFloor(int *nextFloor) {
+    int tempFloor = em_checkBtnPressed();
+    if (tempFloor != -1) {
+        *nextFloor = tempFloor;
     }
 };

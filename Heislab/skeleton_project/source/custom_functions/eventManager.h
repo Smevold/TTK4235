@@ -16,13 +16,15 @@
 int em_checkBtnPressed();
 
 /**
-* @brief Sjekker hvilken etasje heisen er i. Nullindeksert
-* @param[out]
-*  @warning Dersom heisen er mellom etasjer, vil den returnere -1
+* @brief Sjekker hvilken etasje heisen er i, og endrer kanskje currentFloor. Nullindeksert
+* @param[in] currentFloor currentFloor er en peker til forrige etasje den detekterte
+*
+* @warning Dersom heisen er mellom etasjer, vil den ikke oppdatere verdien
 */
-int em_getCurrentFloor();
+void em_getCurrentFloor(int *currentFloor);
 
 /**
 * @brief Genererer etasjerekkefølge basert på 
+* @param[in] nextFloor nextFloor er en peker til forrige etasje heisen var på vei til
 */
-int em_getNextFloor();
+void em_getNextFloor(int *nextFloor);
