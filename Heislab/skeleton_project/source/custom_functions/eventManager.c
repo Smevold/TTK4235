@@ -1,31 +1,33 @@
 #include "eventManager.h"
 
 // Clear funksjon - tømmer historikken og setter nextFloor lik -1
-void em_clear(int *em_queue) {
+void em_clear(int *em_queueUp, int*em_queueDown) {
     for(int i = 0; i < N_FLOORS; ++i) {
-        em_queue[i] = -1;
+        em_queueUp[i] = 0;
+        em_queueDown[i] = 0;
     }
 }
 
 // Sjekker hvilken knapp som er trykket på
-int em_checkBtnPressed() { // GJØR F OG B OM TIL PASS BY REFERENCE
+void em_checkBtnPressed(int* floor, int* btn) {
     // Itererer gjennom alle knappene
     for(int f = 0; f < N_FLOORS; f++) {
         for(int b = 0; b < N_BUTTONS; b++) {
             int btnPressed = elevio_callButton(f,b);
             elevio_buttonLamp(f, b, btnPressed);
 
-            // Returnerer kun dersom en knapp blir trykket på
+            // Endrer verdi kun dersom en knapp blir trykket på
             if(btnPressed == 1) {
-                return f; // Vil også returnere b (som pass by)
+                *floor = f;
+                *btn = b;
+                return;
             }
         }
     }
-    return -1;
 }
 
 // Oppdaterer currentFloor dersom den faktisk er ved en etasje
-void em_getCurrentFloor(int *currentFloor) {
+void em_getCurrentFloor(int* currentFloor) {
     int newFloor = elevio_floorSensor();
 
     // Vil kun oppdatere dersom heisen faktisk er ved en etasje
@@ -34,11 +36,89 @@ void em_getCurrentFloor(int *currentFloor) {
     }
 }
 
-void em_getNextFloor(int *nextFloor) {
-    int f = em_checkBtnPressed();
+// Skal fjerne etasjen fra køen idet den når en etasje, ikke oftere! (kan være vanskelig med vår implementasjon?)
+void em_clearCurrentFloor(int currentFloor, int* em_queueUp, int* em_ququeDown) {
+    // Chech which floor the elevator is on
+    em_getCurrentFloor(&currentFloor);
+
+    // Clears queue for both directions
+    em_queueUp[currentFloor] = 0;
+    em_ququeDown[currentFloor] = 0;
+}
+
+// int* em_queueUp[4] = {0,0,0,0};
+// int* em_queueDown[4] = {0,0,0,0};
+
+// Oppdaterer køene, burde kjøres kontinuerlig for denne er den som merker om en knapp blir trykket
+void em_updateQueues(int* em_queueUp, int* em_queueDown) {
+    int f = -1;
+    int b = -1;
+
+    em_checkBtnPressed(&f, &b);
 
     // Vil ikke oppdatere listen dersom f = -1, for ingen knapp har blitt trykket
-    if (f == -1) {
-        return;
+    if (f == -1) {return;}
+
+    // Sjekker hvilken retning knappen skal
+    if (b == 0) {
+        // Legg til i oppover
+        em_queueUp[f] = 1;
+    } else if (b == 1) {
+        // Legg til i nedover
+        em_queueDown[f] = 1;
+    } else { // b == 2
+        // Legg til i begge etasjer (fordi du vil stoppe i denne etasjen uavhengig av heisens retning)
+        em_queueUp[f] = 1;
+        em_queueDown[f] = 1;
     }
+}
+
+// int* em_queueUp[4] = {0,0,0,0};
+// int* em_queueDown[4] = {0,0,0,0};
+
+// Endrer nextFloor til den neste etasjen, ved å se gjennom listene basert på heisens lokasjon og retning
+void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* motorDir, int* currentFloor) {
+    // nextFloor er neste etasje
+    // em_queueUp er køen oppover
+    // em_queueDown er køen nedover
+    // motorDir er retningen til motoren (må kun være 0 dersom køen er tom)
+    //          den skal altså ikke være 0 fordi den står stille i en etasje og venter
+
+// Vil nå sjekke listene for å finne neste etasje
+    // Sjekker listene i samme retning som heisen kjører
+    if ((*motorDir == 1) && (*currentFloor != (N_FLOORS -1))) { // Heisen er på vei oppover, og den er ikke i øverste etasje
+        for (int i = *currentFloor + 1; i < N_FLOORS; i++) { // Itererer gjennom lista, fra etasjen over og te topp
+            if (em_queueUp[i] != 0) {
+                *nextFloor = em_queueUp[i]; 
+                return;
+            }
+        }
+    } else if ((*motorDir == -1) && (*currentFloor != 0)) { // Heisen er på vei nedover og den er ikke i siste etasje, ekstrasjekken er for å ikke iterere utenfor arrayet, kan det skape problemer? Pass på å bytte motorDir idet den når topp og bunn-etasjen
+        for (int i = *currentFloor - 1; i >= 0; i--) { // Itererer gjennom lista baklengs, fra etasjen under og te bunn
+            if (em_queueDown[i] != 0) {
+                *nextFloor = em_queueDown[i];
+                return;
+            }
+        }
+    } 
+
+    // Hvis den ikke finner noe: sjekker listene i motsatt retning som heisen kjører
+    if (*motorDir == 1) {
+        for (int i = N_FLOORS -1; i >= 0; i--) { // På vei oppover, vil hente fra øverste nedover-bestilling og ta alle den retningen
+            if (em_queueDown != 0) {
+                *nextFloor = em_queueDown[i];
+                return;
+            }
+        }
+    } else if (*motorDir == -1) {
+        for (int i = 0; i < N_FLOORS; i++) {
+            if (em_queueUp != 0) {
+                *nextFloor = em_queueUp[i];
+                return;
+            }
+        }
+    }
+
+    // I teorien er det nå ingen bestillinger
+    *nextFloor = -1;
 };
