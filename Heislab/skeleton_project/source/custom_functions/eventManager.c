@@ -89,14 +89,14 @@ void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* mo
     if ((*motorDir == 1) && (*currentFloor != (N_FLOORS -1))) { // Heisen er på vei oppover, og den er ikke i øverste etasje
         for (int i = *currentFloor + 1; i < N_FLOORS; i++) { // Itererer gjennom lista, fra etasjen over og te topp
             if (em_queueUp[i] != 0) {
-                *nextFloor = em_queueUp[i]; 
+                *nextFloor = i; 
                 return;
             }
         }
     } else if ((*motorDir == -1) && (*currentFloor != 0)) { // Heisen er på vei nedover og den er ikke i siste etasje, ekstrasjekken er for å ikke iterere utenfor arrayet, kan det skape problemer? Pass på å bytte motorDir idet den når topp og bunn-etasjen
         for (int i = *currentFloor - 1; i >= 0; i--) { // Itererer gjennom lista baklengs, fra etasjen under og te bunn
             if (em_queueDown[i] != 0) {
-                *nextFloor = em_queueDown[i];
+                *nextFloor = i;
                 return;
             }
         }
@@ -106,14 +106,14 @@ void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* mo
     if (*motorDir == 1) {
         for (int i = N_FLOORS -1; i >= 0; i--) { // På vei oppover, vil hente fra øverste nedover-bestilling og ta alle den retningen
             if (em_queueDown != 0) {
-                *nextFloor = em_queueDown[i];
+                *nextFloor = i;
                 return;
             }
         }
     } else if (*motorDir == -1) {
         for (int i = 0; i < N_FLOORS; i++) {
             if (em_queueUp != 0) {
-                *nextFloor = em_queueUp[i];
+                *nextFloor = i;
                 return;
             }
         }
