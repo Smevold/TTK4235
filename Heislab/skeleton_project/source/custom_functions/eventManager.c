@@ -122,3 +122,20 @@ void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* mo
     // I teorien er det nå ingen bestillinger
     *nextFloor = -1;
 };
+
+// Printer køen og nextFloor til terminalen for enklere debugging
+void em_printQueue(int* nextFloor, int* em_queueUp, int* em_queueDown) {
+    printf("nF: %d   |   ", *nextFloor);
+
+    printf("qUp: [");
+    for (int i = 0; i < N_FLOORS-1; i++) {
+        printf("%d, ", em_queueUp[i]);
+    }
+    printf("%d]   |   ", em_queueUp[N_FLOORS-1]);
+
+    printf("qDown: [");
+    for (int i = 0; i < N_FLOORS-1; i++) {
+        printf("%d, ", em_queueDown[i]);
+    }
+    printf("%d]\n", em_queueDown[N_FLOORS-1]);
+}

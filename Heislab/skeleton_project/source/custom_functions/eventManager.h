@@ -48,3 +48,8 @@ void em_updateQueues(int* em_queueUp, int* em_queueDown);
 * @param[in] nextFloor nextFloor er en peker til forrige etasje heisen var på vei til
 */
 void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* motorDir, int* currentFloor);
+
+/**
+* @brief Skriver kø og nextFloor til terminalen for debugging
+*/
+void em_printQueue(int* nextFloor, int* em_queueUp, int* em_queueDown);
