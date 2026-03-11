@@ -75,6 +75,9 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     while (*em_nextFloor > *em_currentFloor) {
 
         printf("Moving Upwards\n");
+        printf("Next Floor: %d\n", *em_nextFloor);
+        printf("Current Floor: %d\n", *em_currentFloor);
+        printf("Motor Direction: %d\n", *motorDirection);
 
         mDirUp(motorDirection);
 
@@ -92,7 +95,12 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
     while (*em_nextFloor < *em_currentFloor) {
 
+        em_getCurrentFloor(em_currentFloor);
+
         printf("Moving Downwards\n");
+        printf("Next Floor: %d\n", *em_nextFloor);
+        printf("Current Floor: %d\n", *em_currentFloor);
+        printf("Motor Direction: %d\n", *motorDirection);
 
         mDirDown(motorDirection);
 
@@ -106,6 +114,8 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
         em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
             em_currentFloor);
+
+        em_getCurrentFloor(em_currentFloor);
     }
 
     printf("Exiting Moving State\n");
