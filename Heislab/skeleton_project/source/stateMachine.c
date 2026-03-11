@@ -30,16 +30,16 @@ void state_startUp(){
 }
 
 // Tilstand hvor heisen står stille
-int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
+int state_stationary(int *em_queueUp, int *em_queueDown, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
 
     while (1) {
         mDirStop(motorDirection);
-        em_getNextFloor(em_nextFloor);
+        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection, em_currentFloor);
         em_getCurrentFloor(em_currentFloor);
 
         if (elevio_stopButton() == 1) {
-            em_clear(em_queue);
-            state_openDoor(em_queue, em_nextFloor, em_currentFloor, motorDirection);
+            em_clear(em_queueUp, em_queueDown);
+            state_openDoor(em_queueUp, em_queueDown, em_nextFloor, em_currentFloor, motorDirection);
         }
 
         if ((*em_nextFloor != -1) && (*em_nextFloor != *em_currentFloor)) {
@@ -50,9 +50,9 @@ int state_stationary(int *em_queue, int *em_nextFloor, int *em_currentFloor, int
 }
 
 // Tilstand hvor heisen beveger seg
-int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
+int state_move(int *em_queueUp, int *em_queueDown, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
 
-    em_getNextFloor(em_nextFloor);
+    em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection, em_currentFloor);
     em_getCurrentFloor(em_currentFloor);
 
     while (em_nextFloor > em_currentFloor) {
@@ -65,7 +65,7 @@ int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *moto
             return 1;
         }
 
-        em_getNextFloor(em_nextFloor);
+        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection, em_currentFloor);
     }
 
     while (em_nextFloor < em_currentFloor) {
@@ -78,13 +78,13 @@ int state_move(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *moto
             return 1;
         }
 
-        em_getNextFloor(em_nextFloor);
+        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection, em_currentFloor);
     }
     return 0;
 }
 
 // Tilstand hvor heisen står stille med åpen dør
-int state_openDoor(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
+int state_openDoor(int *em_queueUp, int *em_queueDown, int *em_nextFloor, int *em_currentFloor, int *motorDirection){
 
     clock_t t_start, t_end;
 
@@ -104,7 +104,7 @@ int state_openDoor(int *em_queue, int *em_nextFloor, int *em_currentFloor, int *
         if (elevio_stopButton() == 1) {
             timer_start(&t_start,&t_end);
             printf("Stop Button activated\n");
-            em_clear(em_queue);
+            em_clear(em_queueUp, em_queueDown);
         } else if (elevio_obstruction() == 1) {
             timer_start(&t_start,&t_end);
             printf("Obstruction activated\n");
