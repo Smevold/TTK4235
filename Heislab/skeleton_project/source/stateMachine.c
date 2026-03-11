@@ -1,6 +1,8 @@
 #include "stateMachine.h"
 #include "custom_functions/eventManager.h"
 #include "custom_functions/smallerFunctions.h"
+#include "custom_functions/timer.h"
+#include "driver/elevio.h"
 #include <stdio.h>
 
 #define NEXTFLOOR 1
@@ -52,6 +54,14 @@ int state_stationary(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         if ((*em_nextFloor != -1) && (*em_nextFloor != *em_currentFloor)) {
             break;
         }
+
+        if ((*em_nextFloor != -1) && (*em_currentFloor != elevio_floorSensor())) {
+            *em_currentFloor += *motorDirection;
+            break;
+        } 
+        else if (*em_nextFloor == *em_currentFloor) {
+            state_openDoor(em_queueUp, em_queueDown, em_nextFloor, em_currentFloor, motorDirection);
+        }
     }
     return 0;
 }
@@ -85,6 +95,9 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
         if (elevio_stopButton() == 1) {
             mDirStop(motorDirection);
+            em_clear(em_queueUp, em_queueDown);
+            state_openDoor(em_queueUp, em_queueDown, em_nextFloor,
+                em_currentFloor, motorDirection);
             return 1;
         }
 
@@ -109,13 +122,15 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
         if (elevio_stopButton() == 1) {
             mDirStop(motorDirection);
+            em_clear(em_queueUp, em_queueDown);
+            state_openDoor(em_queueUp, em_queueDown, em_nextFloor,
+                em_currentFloor, motorDirection);
             return 1;
         }
 
     }
 
     printf("Exiting Moving State\n");
-    em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
 
     return 0;
 }
@@ -124,7 +139,16 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     int* em_currentFloor, int* motorDirection) {
 
+    em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
+    em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
+
     printf("=== Entering Open Door State ===\n");
+
+    if (elevio_floorSensor() != -1) {
+        printf("Opening the door\n");
+        elevio_doorOpenLamp(1);
+        // Lamp stuff
+    }
 
     clock_t t_start, t_end;
 
@@ -133,6 +157,8 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     mDirStop(motorDirection);
 
     printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start, t_end);
+
+    em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
 
     while (1) {
 
@@ -144,6 +170,7 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
         em_updateQueues(em_queueUp, em_queueDown);
         em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
+        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection, em_currentFloor);
 
         if (elevio_stopButton() == 1) {
             timer_start(&t_start, &t_end);
@@ -152,9 +179,21 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         } else if (elevio_obstruction() == 1) {
             timer_start(&t_start, &t_end);
             // printf("Obstruction activated\n");
+        } else if (*em_nextFloor == *em_currentFloor) {
+            timer_start(&t_start, &t_end);
+            em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
+            *em_nextFloor = -1;
         }
 
     }
-    printf("Timer done\n");
+    printf("Closing the Doors\n");
+    elevio_doorOpenLamp(0);
+
+    em_updateQueues(em_queueUp, em_queueDown);
+    em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
+        em_currentFloor);
+    em_getCurrentFloor(em_currentFloor);
+    em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
+
     return 1;
 }
