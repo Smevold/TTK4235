@@ -1,8 +1,8 @@
 #include "eventManager.h"
 
 // Clear funksjon - tømmer historikken og setter nextFloor lik -1
-void em_clear(int *em_queueUp, int*em_queueDown) {
-    for(int i = 0; i < N_FLOORS; ++i) {
+void em_clear(int* em_queueUp, int* em_queueDown) {
+    for (int i = 0; i < N_FLOORS; ++i) {
         em_queueUp[i] = 0;
         em_queueDown[i] = 0;
     }
@@ -11,13 +11,13 @@ void em_clear(int *em_queueUp, int*em_queueDown) {
 // Sjekker hvilken knapp som er trykket på
 void em_checkBtnPressed(int* floor, int* btn) {
     // Itererer gjennom alle knappene
-    for(int f = 0; f < N_FLOORS; f++) {
-        for(int b = 0; b < N_BUTTONS; b++) {
-            int btnPressed = elevio_callButton(f,b);
+    for (int f = 0; f < N_FLOORS; f++) {
+        for (int b = 0; b < N_BUTTONS; b++) {
+            int btnPressed = elevio_callButton(f, b);
             elevio_buttonLamp(f, b, btnPressed);
 
             // Endrer verdi kun dersom en knapp blir trykket på
-            if(btnPressed == 1) {
+            if (btnPressed == 1) {
                 *floor = f;
                 *btn = b;
                 return;
@@ -36,8 +36,10 @@ void em_getCurrentFloor(int* em_currentFloor) {
     }
 }
 
-// Skal fjerne etasjen fra køen idet den når en etasje, ikke oftere! (kan være vanskelig med vår implementasjon?)
-void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp, int* em_queueDown) {
+// Skal fjerne etasjen fra køen idet den når en etasje, ikke oftere! (kan være
+// vanskelig med vår implementasjon?)
+void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp,
+                          int* em_queueDown) {
     // Chech which floor the elevator is on
     em_getCurrentFloor(em_currentFloor);
 
@@ -49,15 +51,19 @@ void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp, int* em_queueDo
 // int* em_queueUp[4] = {0,0,0,0};
 // int* em_queueDown[4] = {0,0,0,0};
 
-// Oppdaterer køene, burde kjøres kontinuerlig for denne er den som merker om en knapp blir trykket
+// Oppdaterer køene, burde kjøres kontinuerlig for denne er den som merker om en
+// knapp blir trykket
 void em_updateQueues(int* em_queueUp, int* em_queueDown) {
     int f = -1;
     int b = -1;
 
     em_checkBtnPressed(&f, &b);
 
-    // Vil ikke oppdatere listen dersom f = -1, for ingen knapp har blitt trykket
-    if (f == -1) {return;}
+    // Vil ikke oppdatere listen dersom f = -1, for ingen knapp har blitt
+    // trykket
+    if (f == -1) {
+        return;
+    }
 
     // Sjekker hvilken retning knappen skal
     if (b == 0) {
@@ -66,8 +72,10 @@ void em_updateQueues(int* em_queueUp, int* em_queueDown) {
     } else if (b == 1) {
         // Legg til i nedover
         em_queueDown[f] = 1;
-    } else { // b == 2
-        // Legg til i begge etasjer (fordi du vil stoppe i denne etasjen uavhengig av heisens retning)
+    } else {
+        // b == 2
+        // Legg til i begge etasjer (fordi du vil stoppe i denne etasjen
+        // uavhengig av heisens retning)
         em_queueUp[f] = 1;
         em_queueDown[f] = 1;
     }
@@ -76,31 +84,42 @@ void em_updateQueues(int* em_queueUp, int* em_queueDown) {
 // int* em_queueUp[4] = {0,0,0,0};
 // int* em_queueDown[4] = {0,0,0,0};
 
-// Endrer nextFloor til den neste etasjen, ved å se gjennom listene basert på heisens lokasjon og retning
-void em_getNextFloor(int *em_nextFloor, int* em_queueUp, int* em_queueDown, int* motorDirection, int* em_currentFloor) {
+// Endrer nextFloor til den neste etasjen, ved å se gjennom listene basert på
+// heisens lokasjon og retning
+void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
+                     int* motorDirection, int* em_currentFloor) {
     // nextFloor er neste etasje
     // em_queueUp er køen oppover
     // em_queueDown er køen nedover
     // motorDir er retningen til motoren (må kun være 0 dersom køen er tom)
-    //          den skal altså ikke være 0 fordi den står stille i en etasje og venter
-    
-// Vil nå sjekke listene for å finne neste etasje
+    //          den skal altså ikke være 0 fordi den står stille i en etasje og
+    //          venter
+
+    // Vil nå sjekke listene for å finne neste etasje
     // Sjekker listene i samme retning som heisen kjører
-    if ((*motorDirection == 1) && (*em_currentFloor != (N_FLOORS -1))) { // Heisen er på vei oppover, og den er ikke i øverste etasje
-        for (int i = *em_currentFloor + 1; i < N_FLOORS; i++) { // Itererer gjennom lista, fra etasjen over og te topp
+    if ((*motorDirection == 1) && (*em_currentFloor != (N_FLOORS - 1))) {
+        // Heisen er på vei oppover, og den er ikke i øverste etasje
+        for (int i = *em_currentFloor + 1; i < N_FLOORS; i++) {
+            // Itererer gjennom lista, fra etasjen over og te topp
             if (em_queueUp[i] != 0) {
-                *em_nextFloor = i; 
+                *em_nextFloor = i;
                 return;
             }
         }
-    } else if ((*motorDirection == -1) && (*em_currentFloor != 0)) { // Heisen er på vei nedover og den er ikke i siste etasje, ekstrasjekken er for å ikke iterere utenfor arrayet, kan det skape problemer? Pass på å bytte motorDir idet den når topp og bunn-etasjen
-        for (int i = *em_currentFloor - 1; i >= 0; i--) { // Itererer gjennom lista baklengs, fra etasjen under og te bunn
+    } else if ((*motorDirection == -1) && (*em_currentFloor != 0)) {
+        // Heisen er på vei nedover og den er ikke i siste etasje,
+        // ekstrasjekken er for å ikke iterere utenfor arrayet,
+        // kan det skape problemer? Pass på å bytte motorDir idet
+        // den når topp og bunn-etasjen
+        for (int i = *em_currentFloor - 1; i >= 0;
+             i--) { // Itererer gjennom lista baklengs, fra etasjen under og te
+                    // bunn
             if (em_queueDown[i] != 0) {
                 *em_nextFloor = i;
                 return;
             }
         }
-    } 
+    }
 
     // Tar nextFloor fra begge køene, dersom køene er tomme fra før
     if (*em_nextFloor == -1) {
@@ -111,15 +130,20 @@ void em_getNextFloor(int *em_nextFloor, int* em_queueUp, int* em_queueDown, int*
             }
         }
     }
-    // Hvis den ikke finner noe: sjekker listene i motsatt retning som heisen kjører
+    // Hvis den ikke finner noe: sjekker listene i motsatt retning som heisen
+    // kjører
     if (*motorDirection == 1) {
-        for (int i = N_FLOORS -1; i >= 0; i--) { // På vei oppover, vil hente fra øverste nedover-bestilling og ta alle den retningen
+        for (int i = N_FLOORS - 1; i >= 0; i--) {
+            // På vei oppover, vil hente fra øverste nedover-bestilling
+            // og ta alle den retningen
             if (em_queueDown != 0) {
                 *em_nextFloor = i;
                 return;
             }
         }
-        for (int i = 0; i < N_FLOORS; i++) { // På vei oppover, vil hente fra øverste nedover-bestilling og ta alle den retningen
+        for (int i = 0; i < N_FLOORS; i++) {
+            // På vei oppover, vil hente fra øverste nedover-bestilling
+            // og ta alle den retningen
             if (em_queueUp != 0) {
                 *em_nextFloor = i;
                 return;
@@ -132,7 +156,7 @@ void em_getNextFloor(int *em_nextFloor, int* em_queueUp, int* em_queueDown, int*
                 return;
             }
         }
-        for (int i = N_FLOORS -1; i >= 0; i--) {
+        for (int i = N_FLOORS - 1; i >= 0; i--) {
             if (em_queueDown != 0) {
                 *em_nextFloor = i;
                 return;
@@ -149,14 +173,14 @@ void em_printQueue(int* nextFloor, int* em_queueUp, int* em_queueDown) {
     printf("nF: %d   |   ", *nextFloor);
 
     printf("qUp: [");
-    for (int i = 0; i < N_FLOORS-1; i++) {
+    for (int i = 0; i < N_FLOORS - 1; i++) {
         printf("%d, ", em_queueUp[i]);
     }
-    printf("%d]   |   ", em_queueUp[N_FLOORS-1]);
+    printf("%d]   |   ", em_queueUp[N_FLOORS - 1]);
 
     printf("qDown: [");
-    for (int i = 0; i < N_FLOORS-1; i++) {
+    for (int i = 0; i < N_FLOORS - 1; i++) {
         printf("%d, ", em_queueDown[i]);
     }
-    printf("%d]\n", em_queueDown[N_FLOORS-1]);
+    printf("%d]\n", em_queueDown[N_FLOORS - 1]);
 }
