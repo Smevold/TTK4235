@@ -27,23 +27,23 @@ void em_checkBtnPressed(int* floor, int* btn) {
 }
 
 // Oppdaterer currentFloor dersom den faktisk er ved en etasje
-void em_getCurrentFloor(int* currentFloor) {
+void em_getCurrentFloor(int* em_currentFloor) {
     int newFloor = elevio_floorSensor();
 
     // Vil kun oppdatere dersom heisen faktisk er ved en etasje
     if (newFloor != -1) {
-        *currentFloor = newFloor;
+        *em_currentFloor = newFloor;
     }
 }
 
 // Skal fjerne etasjen fra køen idet den når en etasje, ikke oftere! (kan være vanskelig med vår implementasjon?)
-void em_clearCurrentFloor(int currentFloor, int* em_queueUp, int* em_queueDown) {
+void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp, int* em_queueDown) {
     // Chech which floor the elevator is on
-    em_getCurrentFloor(&currentFloor);
+    em_getCurrentFloor(em_currentFloor);
 
     // Clears queue for both directions
-    em_queueUp[currentFloor] = 0;
-    em_queueDown[currentFloor] = 0;
+    em_queueUp[*em_currentFloor] = 0;
+    em_queueDown[*em_currentFloor] = 0;
 }
 
 // int* em_queueUp[4] = {0,0,0,0};
@@ -77,7 +77,7 @@ void em_updateQueues(int* em_queueUp, int* em_queueDown) {
 // int* em_queueDown[4] = {0,0,0,0};
 
 // Endrer nextFloor til den neste etasjen, ved å se gjennom listene basert på heisens lokasjon og retning
-void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* motorDir, int* currentFloor) {
+void em_getNextFloor(int *em_nextFloor, int* em_queueUp, int* em_queueDown, int* motorDirection, int* em_currentFloor) {
     // nextFloor er neste etasje
     // em_queueUp er køen oppover
     // em_queueDown er køen nedover
@@ -85,52 +85,63 @@ void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* mo
     //          den skal altså ikke være 0 fordi den står stille i en etasje og venter
     
 // Vil nå sjekke listene for å finne neste etasje
-    // Tar nextFloor fra begge køene, dersom køene er tomme fra før
-    if (*nextFloor == -1) {
-        for (int i = 0; i < N_FLOORS; i++) {
-            if (em_queueUp[i] != 0 || em_queueDown[i] != 0) {
-                *nextFloor = i;
-                return;
-            }
-        }
-    }
-
     // Sjekker listene i samme retning som heisen kjører
-    if ((*motorDir == 1) && (*currentFloor != (N_FLOORS -1))) { // Heisen er på vei oppover, og den er ikke i øverste etasje
-        for (int i = *currentFloor + 1; i < N_FLOORS; i++) { // Itererer gjennom lista, fra etasjen over og te topp
+    if ((*motorDirection == 1) && (*em_currentFloor != (N_FLOORS -1))) { // Heisen er på vei oppover, og den er ikke i øverste etasje
+        for (int i = *em_currentFloor + 1; i < N_FLOORS; i++) { // Itererer gjennom lista, fra etasjen over og te topp
             if (em_queueUp[i] != 0) {
-                *nextFloor = i; 
+                *em_nextFloor = i; 
                 return;
             }
         }
-    } else if ((*motorDir == -1) && (*currentFloor != 0)) { // Heisen er på vei nedover og den er ikke i siste etasje, ekstrasjekken er for å ikke iterere utenfor arrayet, kan det skape problemer? Pass på å bytte motorDir idet den når topp og bunn-etasjen
-        for (int i = *currentFloor - 1; i >= 0; i--) { // Itererer gjennom lista baklengs, fra etasjen under og te bunn
+    } else if ((*motorDirection == -1) && (*em_currentFloor != 0)) { // Heisen er på vei nedover og den er ikke i siste etasje, ekstrasjekken er for å ikke iterere utenfor arrayet, kan det skape problemer? Pass på å bytte motorDir idet den når topp og bunn-etasjen
+        for (int i = *em_currentFloor - 1; i >= 0; i--) { // Itererer gjennom lista baklengs, fra etasjen under og te bunn
             if (em_queueDown[i] != 0) {
-                *nextFloor = i;
+                *em_nextFloor = i;
                 return;
             }
         }
     } 
 
-    // Hvis den ikke finner noe: sjekker listene i motsatt retning som heisen kjører
-    if (*motorDir == 1) {
-        for (int i = N_FLOORS -1; i >= 0; i--) { // På vei oppover, vil hente fra øverste nedover-bestilling og ta alle den retningen
-            if (em_queueDown != 0) {
-                *nextFloor = i;
+    // Tar nextFloor fra begge køene, dersom køene er tomme fra før
+    if (*em_nextFloor == -1) {
+        for (int i = 0; i < N_FLOORS; i++) {
+            if (em_queueUp[i] != 0 || em_queueDown[i] != 0) {
+                *em_nextFloor = i;
                 return;
             }
         }
-    } else if (*motorDir == -1) {
+    }
+    // Hvis den ikke finner noe: sjekker listene i motsatt retning som heisen kjører
+    if (*motorDirection == 1) {
+        for (int i = N_FLOORS -1; i >= 0; i--) { // På vei oppover, vil hente fra øverste nedover-bestilling og ta alle den retningen
+            if (em_queueDown != 0) {
+                *em_nextFloor = i;
+                return;
+            }
+        }
+        for (int i = 0; i < N_FLOORS; i++) { // På vei oppover, vil hente fra øverste nedover-bestilling og ta alle den retningen
+            if (em_queueUp != 0) {
+                *em_nextFloor = i;
+                return;
+            }
+        }
+    } else if (*motorDirection == -1) {
         for (int i = 0; i < N_FLOORS; i++) {
             if (em_queueUp != 0) {
-                *nextFloor = i;
+                *em_nextFloor = i;
+                return;
+            }
+        }
+        for (int i = N_FLOORS -1; i >= 0; i--) {
+            if (em_queueDown != 0) {
+                *em_nextFloor = i;
                 return;
             }
         }
     }
 
     // I teorien er det nå ingen bestillinger
-    *nextFloor = -1;
+    *em_nextFloor = -1;
 };
 
 // Printer køen og nextFloor til terminalen for enklere debugging
