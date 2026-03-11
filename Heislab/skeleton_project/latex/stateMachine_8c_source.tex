@@ -1,0 +1,205 @@
+\doxysection{state\+Machine.\+c}
+\hypertarget{stateMachine_8c_source}{}\label{stateMachine_8c_source}\index{source/stateMachine.c@{source/stateMachine.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{stateMachine_8h}{stateMachine.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}custom\_functions/eventManager.h"{}}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}custom\_functions/smallerFunctions.h"{}}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}custom\_functions/timer.h"{}}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}driver/elevio.h"{}}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00008}00008\ \textcolor{preprocessor}{\#define\ NEXTFLOOR\ 1}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00010}00010\ \textcolor{comment}{//\ Kjøres\ kun\ en\ gang:}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00011}\mbox{\hyperlink{stateMachine_8h_a1456cd7822dac5220190a290e2ed42db}{00011}}\ \textcolor{keywordtype}{void}\ state\_startUp()\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00013}00013\ \ \ \ \ elevio\_init();\ \textcolor{comment}{//\ Initialisere\ IO}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00015}00015\ \ \ \ \ printf(\textcolor{stringliteral}{"{}===\ Program\ Starting\ ===\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{int}\ floor\ =\ elevio\_floorSensor();}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{while}\ (floor\ ==\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00021}00021\ \ \ \ \ \ \ \ \ floor\ =\ elevio\_floorSensor();}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_stopButton()\ ==\ 1)\ \{\ \textcolor{comment}{//\ Hvis\ stoppknapp\ blir\ initiert}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ elevio\_motorDirection(DIRN\_STOP);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ sleep(3);\ \textcolor{comment}{//\ Potensially\ change\ method\ later}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00026}00026\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ elevio\_motorDirection(DIRN\_DOWN);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00029}00029\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00030}00030\ \ \ \ \ elevio\_motorDirection(DIRN\_STOP);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00031}00031\ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00033}00033\ \textcolor{comment}{//\ Tilstand\ hvor\ heisen\ står\ stille}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00034}\mbox{\hyperlink{stateMachine_8h_a83299b4b27b1a63cdf54b30b8439cc42}{00034}}\ \textcolor{keywordtype}{int}\ state\_stationary(\textcolor{keywordtype}{int}*\ em\_queueUp,\ \textcolor{keywordtype}{int}*\ em\_queueDown,\ \textcolor{keywordtype}{int}*\ em\_nextFloor,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{int}*\ em\_currentFloor,\ \textcolor{keywordtype}{int}*\ motorDirection)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00037}00037\ \ \ \ \ printf(\textcolor{stringliteral}{"{}===\ Entering\ Stationary\ State\ ===\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{while}\ (1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00040}00040\ \ \ \ \ \ \ \ \ mDirStop(motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00041}00041\ \ \ \ \ \ \ \ \ em\_updateQueues(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00042}00042\ \ \ \ \ \ \ \ \ em\_getNextFloor(em\_nextFloor,\ em\_queueUp,\ em\_queueDown,\ motorDirection,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00044}00044\ \ \ \ \ \ \ \ \ em\_getCurrentFloor(em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00045}00045\ \ \ \ \ \ \ \ \ em\_printQueue(em\_nextFloor,\ em\_currentFloor,\ motorDirection,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_stopButton()\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ em\_clear(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ state\_openDoor(em\_queueUp,\ em\_queueDown,\ em\_nextFloor,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ em\_currentFloor,\ motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}===\ Entering\ Stationary\ State\ ===\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00052}00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*em\_nextFloor\ !=\ -\/1)\ \&\&\ (*em\_nextFloor\ !=\ *em\_currentFloor))\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*em\_nextFloor\ !=\ -\/1)\ \&\&\ (*em\_currentFloor\ !=\ elevio\_floorSensor()))\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ *em\_currentFloor\ +=\ *motorDirection;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00061}00061\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*em\_nextFloor\ ==\ *em\_currentFloor)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ state\_openDoor(em\_queueUp,\ em\_queueDown,\ em\_nextFloor,\ em\_currentFloor,\ motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00066}00066\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00067}00067\ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00069}00069\ \textcolor{comment}{//\ Tilstand\ hvor\ heisen\ beveger\ seg}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00070}\mbox{\hyperlink{stateMachine_8h_af22d73fff6cdd22b5597a1baf1e5c1fc}{00070}}\ \textcolor{keywordtype}{int}\ state\_move(\textcolor{keywordtype}{int}*\ em\_queueUp,\ \textcolor{keywordtype}{int}*\ em\_queueDown,\ \textcolor{keywordtype}{int}*\ em\_nextFloor,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00071}00071\ \ \ \ \ \textcolor{keywordtype}{int}*\ em\_currentFloor,\ \textcolor{keywordtype}{int}*\ motorDirection)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00073}00073\ \ \ \ \ printf(\textcolor{stringliteral}{"{}===\ Entering\ Moving\ State\ ===\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00075}00075\ \ \ \ \ \textcolor{comment}{//\ em\_updateQueues(em\_queueUp,\ em\_queueDown);}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00076}00076\ \ \ \ \ \textcolor{comment}{//\ em\_getNextFloor(em\_nextFloor,\ em\_queueUp,\ em\_queueDown,\ motorDirection,}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00077}00077\ \ \ \ \ \textcolor{comment}{//\ em\_currentFloor);\ em\_getCurrentFloor(em\_currentFloor);}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00079}00079\ \ \ \ \ em\_printQueue(em\_nextFloor,\ em\_currentFloor,\ motorDirection,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00081}00081\ \ \ \ \ \textcolor{keywordflow}{while}\ (*em\_nextFloor\ >\ *em\_currentFloor)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ mDirUp(motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ em\_getNextFloor(em\_nextFloor,\ em\_queueUp,\ em\_queueDown,\ motorDirection,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ em\_getCurrentFloor(em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Moving\ Upwards\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ em\_printQueue(em\_nextFloor,\ em\_currentFloor,\ motorDirection,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00093}00093\ \ \ \ \ \ \ \ \ em\_updateQueues(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00094}00094\ \ \ \ \ \ \ \ \ em\_getCurrentFloor(em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_stopButton()\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ mDirStop(motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ em\_clear(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ state\_openDoor(em\_queueUp,\ em\_queueDown,\ em\_nextFloor,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ em\_currentFloor,\ motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00105}00105\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00107}00107\ \ \ \ \ \textcolor{keywordflow}{while}\ (*em\_nextFloor\ <\ *em\_currentFloor)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00109}00109\ \ \ \ \ \ \ \ \ mDirDown(motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ em\_getNextFloor(em\_nextFloor,\ em\_queueUp,\ em\_queueDown,\ motorDirection,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ em\_getCurrentFloor(em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Moving\ Downwards\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ em\_printQueue(em\_nextFloor,\ em\_currentFloor,\ motorDirection,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00120}00120\ \ \ \ \ \ \ \ \ em\_updateQueues(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00121}00121\ \ \ \ \ \ \ \ \ em\_getCurrentFloor(em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_stopButton()\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ mDirStop(motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ em\_clear(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ state\_openDoor(em\_queueUp,\ em\_queueDown,\ em\_nextFloor,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ em\_currentFloor,\ motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00129}00129\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00131}00131\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00133}00133\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Exiting\ Moving\ State\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00135}00135\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00136}00136\ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00138}00138\ \textcolor{comment}{//\ Tilstand\ hvor\ heisen\ står\ stille\ med\ åpen\ dør}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00139}\mbox{\hyperlink{stateMachine_8h_a495e3950742bc582fcf599c482a53f9f}{00139}}\ \textcolor{keywordtype}{int}\ state\_openDoor(\textcolor{keywordtype}{int}*\ em\_queueUp,\ \textcolor{keywordtype}{int}*\ em\_queueDown,\ \textcolor{keywordtype}{int}*\ em\_nextFloor,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00140}00140\ \ \ \ \ \textcolor{keywordtype}{int}*\ em\_currentFloor,\ \textcolor{keywordtype}{int}*\ motorDirection)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00142}00142\ \ \ \ \ em\_clearCurrentFloor(em\_currentFloor,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00143}00143\ \ \ \ \ em\_printQueue(em\_nextFloor,\ em\_currentFloor,\ motorDirection,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00145}00145\ \ \ \ \ printf(\textcolor{stringliteral}{"{}===\ Entering\ Open\ Door\ State\ ===\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00147}00147\ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_floorSensor()\ !=\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00148}00148\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Opening\ the\ door\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00149}00149\ \ \ \ \ \ \ \ \ elevio\_doorOpenLamp(1);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lamp\ stuff}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00151}00151\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00153}00153\ \ \ \ \ clock\_t\ t\_start,\ t\_end;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00155}00155\ \ \ \ \ timer\_start(\&t\_start,\ \&t\_end);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00157}00157\ \ \ \ \ mDirStop(motorDirection);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00159}00159\ \ \ \ \ printf(\textcolor{stringliteral}{"{}The\ time\ is\ now:\ \%lu\(\backslash\)nAnd\ the\ time\ will\ be:\ \%lu\(\backslash\)n"{}},\ t\_start,\ t\_end);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00161}00161\ \ \ \ \ em\_clearCurrentFloor(em\_currentFloor,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{while}\ (1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (timer\_isTimeOut(\&t\_start,\ \&t\_end))\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00167}00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00169}00169\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}The\ time\ is\ now:\ \%lu\(\backslash\)n"{}},\ t\_start);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00171}00171\ \ \ \ \ \ \ \ \ em\_updateQueues(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00172}00172\ \ \ \ \ \ \ \ \ em\_printQueue(em\_nextFloor,\ em\_currentFloor,\ motorDirection,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00173}00173\ \ \ \ \ \ \ \ \ em\_getNextFloor(em\_nextFloor,\ em\_queueUp,\ em\_queueDown,\ motorDirection,\ em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_stopButton()\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ timer\_start(\&t\_start,\ \&t\_end);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ printf("{}Stop\ Button\ activated\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ em\_clear(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00179}00179\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (elevio\_obstruction()\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ timer\_start(\&t\_start,\ \&t\_end);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ printf("{}Obstruction\ activated\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00182}00182\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*em\_nextFloor\ ==\ *em\_currentFloor)\ \{}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ timer\_start(\&t\_start,\ \&t\_end);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ em\_clearCurrentFloor(em\_currentFloor,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00186}00186\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00188}00188\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00189}00189\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Closing\ the\ Doors\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00190}00190\ \ \ \ \ elevio\_doorOpenLamp(0);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00192}00192\ \ \ \ \ em\_updateQueues(em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00193}00193\ \ \ \ \ em\_getNextFloor(em\_nextFloor,\ em\_queueUp,\ em\_queueDown,\ motorDirection,}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00195}00195\ \ \ \ \ em\_getCurrentFloor(em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00196}00196\ \ \ \ \ em\_printQueue(em\_nextFloor,\ em\_currentFloor,\ motorDirection,\ em\_queueUp,\ em\_queueDown);}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00198}00198\ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{stateMachine_8c_source_l00199}00199\ \}}
+
+\end{DoxyCode}

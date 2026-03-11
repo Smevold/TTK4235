@@ -1,0 +1,143 @@
+\doxysection{source/state\+Machine.h File Reference}
+\hypertarget{stateMachine_8h}{}\label{stateMachine_8h}\index{source/stateMachine.h@{source/stateMachine.h}}
+
+
+Dette er selve tilstandsmaskinen i heisen, den skal aktivt endre tilstand ut ifra hva som skjer.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include "{}custom\+\_\+functions/timer.\+h"{}}\newline
+{\ttfamily \#include "{}driver/elevio.\+h"{}}\newline
+{\ttfamily \#include "{}custom\+\_\+functions/event\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}custom\+\_\+functions/smaller\+Functions.\+h"{}}\newline
+Include dependency graph for state\+Machine.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stateMachine_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=310pt]{stateMachine_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{stateMachine_8h_a1456cd7822dac5220190a290e2ed42db}{state\+\_\+start\+Up}} ()
+\begin{DoxyCompactList}\small\item\em Dette er tilstanden som skjer ved oppstart av programmet. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stateMachine_8h_a83299b4b27b1a63cdf54b30b8439cc42}{state\+\_\+stationary}} (int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down, int \texorpdfstring{$\ast$}{*}em\+\_\+next\+Floor, int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor, int \texorpdfstring{$\ast$}{*}motor\+Direction)
+\begin{DoxyCompactList}\small\item\em Dette er tilstanden hvor heisen er stasjonær i en etasje med døren lukket. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stateMachine_8h_af22d73fff6cdd22b5597a1baf1e5c1fc}{state\+\_\+move}} (int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down, int \texorpdfstring{$\ast$}{*}em\+\_\+next\+Floor, int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor, int \texorpdfstring{$\ast$}{*}motor\+Direction)
+\begin{DoxyCompactList}\small\item\em Dette er tilstanden hvor heisen er i bevegelse. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stateMachine_8h_a495e3950742bc582fcf599c482a53f9f}{state\+\_\+open\+Door}} (int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down, int \texorpdfstring{$\ast$}{*}em\+\_\+next\+Floor, int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor, int \texorpdfstring{$\ast$}{*}motor\+Direction)
+\begin{DoxyCompactList}\small\item\em Dette er tilstanden hvor heisen er stasjonær i en etasje med døren åpmet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Dette er selve tilstandsmaskinen i heisen, den skal aktivt endre tilstand ut ifra hva som skjer. 
+
+
+
+Definition in file \mbox{\hyperlink{stateMachine_8h_source}{state\+Machine.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{stateMachine_8h_af22d73fff6cdd22b5597a1baf1e5c1fc}\label{stateMachine_8h_af22d73fff6cdd22b5597a1baf1e5c1fc} 
+\index{stateMachine.h@{stateMachine.h}!state\_move@{state\_move}}
+\index{state\_move@{state\_move}!stateMachine.h@{stateMachine.h}}
+\doxysubsubsection{\texorpdfstring{state\_move()}{state\_move()}}
+{\footnotesize\ttfamily int state\+\_\+move (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+next\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{motor\+Direction }\end{DoxyParamCaption})}
+
+
+
+Dette er tilstanden hvor heisen er i bevegelse. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em em\+\_\+queue} & er en pointer til et array med de neste etasjene som event\+Manager bestemmer hva skal være, brukes til pass-\/by-\/reference \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+next\+Floor} & er en pointer til neste etasje som heisen skal gå til \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+current\+Floor} & er en pointer til etasjen heisen er i \\
+\hline
+\mbox{\texttt{ out}}  & {\em f} & brukes for å stoppe heisen der den er dersom den er 1. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{stateMachine_8c_source_l00070}{70}} of file \mbox{\hyperlink{stateMachine_8c_source}{state\+Machine.\+c}}.
+
+\Hypertarget{stateMachine_8h_a495e3950742bc582fcf599c482a53f9f}\label{stateMachine_8h_a495e3950742bc582fcf599c482a53f9f} 
+\index{stateMachine.h@{stateMachine.h}!state\_openDoor@{state\_openDoor}}
+\index{state\_openDoor@{state\_openDoor}!stateMachine.h@{stateMachine.h}}
+\doxysubsubsection{\texorpdfstring{state\_openDoor()}{state\_openDoor()}}
+{\footnotesize\ttfamily int state\+\_\+open\+Door (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+next\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{motor\+Direction }\end{DoxyParamCaption})}
+
+
+
+Dette er tilstanden hvor heisen er stasjonær i en etasje med døren åpmet. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em em\+\_\+queue} & er en pointer til et array med de neste etasjene som event\+Manager bestemmer hva skal være, brukes til pass-\/by-\/reference \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+next\+Floor} & er en pointer til neste etasje som heisen skal gå til \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+current\+Floor} & er en pointer til etasjen heisen er i \\
+\hline
+\mbox{\texttt{ out}}  & {\em f} & brukes for å stoppe heisen der den er dersom den er 1. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{stateMachine_8c_source_l00139}{139}} of file \mbox{\hyperlink{stateMachine_8c_source}{state\+Machine.\+c}}.
+
+\Hypertarget{stateMachine_8h_a1456cd7822dac5220190a290e2ed42db}\label{stateMachine_8h_a1456cd7822dac5220190a290e2ed42db} 
+\index{stateMachine.h@{stateMachine.h}!state\_startUp@{state\_startUp}}
+\index{state\_startUp@{state\_startUp}!stateMachine.h@{stateMachine.h}}
+\doxysubsubsection{\texorpdfstring{state\_startUp()}{state\_startUp()}}
+{\footnotesize\ttfamily void state\+\_\+start\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Dette er tilstanden som skjer ved oppstart av programmet. 
+
+
+
+Definition at line \mbox{\hyperlink{stateMachine_8c_source_l00011}{11}} of file \mbox{\hyperlink{stateMachine_8c_source}{state\+Machine.\+c}}.
+
+\Hypertarget{stateMachine_8h_a83299b4b27b1a63cdf54b30b8439cc42}\label{stateMachine_8h_a83299b4b27b1a63cdf54b30b8439cc42} 
+\index{stateMachine.h@{stateMachine.h}!state\_stationary@{state\_stationary}}
+\index{state\_stationary@{state\_stationary}!stateMachine.h@{stateMachine.h}}
+\doxysubsubsection{\texorpdfstring{state\_stationary()}{state\_stationary()}}
+{\footnotesize\ttfamily int state\+\_\+stationary (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+next\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{motor\+Direction }\end{DoxyParamCaption})}
+
+
+
+Dette er tilstanden hvor heisen er stasjonær i en etasje med døren lukket. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em em\+\_\+queue} & er en pointer til et array med de neste etasjene som event\+Manager bestemmer hva skal være, brukes til pass-\/by-\/reference \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+next\+Floor} & er en pointer til neste etasje som heisen skal gå til \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+current\+Floor} & er en pointer til etasjen heisen er i \\
+\hline
+\mbox{\texttt{ out}}  & {\em f} & brukes for å stoppe heisen der den er dersom den er 1. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{stateMachine_8c_source_l00034}{34}} of file \mbox{\hyperlink{stateMachine_8c_source}{state\+Machine.\+c}}.
+
