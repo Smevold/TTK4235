@@ -17,6 +17,9 @@ void em_checkBtnPressed(int* floor, int* btn) {
     // Itererer gjennom alle knappene
     for (int f = 0; f < N_FLOORS; f++) {
         for (int b = 0; b < N_BUTTONS; b++) {
+
+            if (elevio_stopButton() == 1) return;
+            
             int btnPressed = elevio_callButton(f, b);
             
             // Endrer verdi kun dersom en knapp blir trykket på
@@ -61,6 +64,9 @@ void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp,
 // Oppdaterer køene, burde kjøres kontinuerlig for denne er den som merker om en
 // knapp blir trykket
 void em_updateQueues(int* em_queueUp, int* em_queueDown) {
+
+    if (elevio_stopButton() == 1) return;
+
     int f = -1;
     int b = -1;
 
