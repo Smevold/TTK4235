@@ -10,6 +10,5 @@ void mDirDown(int *MotorDirection){
 }
 void mDirStop(int *MotorDirection){
     elevio_motorDirection(DIRN_STOP);
-    *MotorDirection = 0;
 }
 

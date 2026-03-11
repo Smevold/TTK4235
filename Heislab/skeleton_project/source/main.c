@@ -16,7 +16,7 @@ int main (){
 
     state_startUp();
 
-    int test = state_openDoor(em_queueUp, em_queueDown, 
+    /* int test = state_openDoor(em_queueUp, em_queueDown, 
         &em_nextFloor, &em_currentFloor, 
         &motorDirection
     );
@@ -24,7 +24,7 @@ int main (){
         printf("Hurray\n");
     } else {
         printf("BUUUU\n");
-    }
+    } */
 
     while(1) {
         while (stop != 1) {
