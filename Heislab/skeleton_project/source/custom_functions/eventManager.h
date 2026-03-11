@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include "../driver/elevio.h"
+#include "lights.h"
 
 /**
 * @file
