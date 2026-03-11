@@ -169,8 +169,10 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
 };
 
 // Printer køen og nextFloor til terminalen for enklere debugging
-void em_printQueue(int* nextFloor, int* em_queueUp, int* em_queueDown) {
-    printf("nF: %d   |   ", *nextFloor);
+void em_printQueue(int* em_nextFloor, int* em_currentFloor, int* motorDirection, int* em_queueUp, int* em_queueDown) {
+    printf("nF: %d   |   ", *em_nextFloor);
+    printf("cF: %d   |   ", *em_currentFloor);
+    printf("mD: %d   |   ", *motorDirection);
 
     printf("qUp: [");
     for (int i = 0; i < N_FLOORS - 1; i++) {

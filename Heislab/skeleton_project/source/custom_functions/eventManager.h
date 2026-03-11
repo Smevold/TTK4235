@@ -52,4 +52,4 @@ void em_getNextFloor(int *em_nextFloor, int* em_queueUp, int* em_queueDown, int*
 /**
 * @brief Skriver kø og nextFloor til terminalen for debugging
 */
-void em_printQueue(int* em_nextFloor, int* em_queueUp, int* em_queueDown);
+void em_printQueue(int* em_nextFloor, int* em_currentFloor, int* motorDirection, int* em_queueUp, int* em_queueDown);
