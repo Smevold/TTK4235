@@ -10,7 +10,7 @@ int main() {
     int stop            = 1;
     int em_nextFloor    = -1;
     int em_currentFloor = -1;
-    int motorDirection  = 0;
+    int motorDirection  = 1;
 
     int em_queueUp[N_FLOORS];
     int em_queueDown[N_FLOORS];
