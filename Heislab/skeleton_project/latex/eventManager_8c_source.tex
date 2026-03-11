@@ -1,0 +1,207 @@
+\doxysection{event\+Manager.\+c}
+\hypertarget{eventManager_8c_source}{}\label{eventManager_8c_source}\index{source/custom\_functions/eventManager.c@{source/custom\_functions/eventManager.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{eventManager_8h}{eventManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lights_8h}{lights.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00004}00004\ \textcolor{comment}{//\ Clear\ funksjon\ -\/\ tømmer\ historikken\ og\ setter\ nextFloor\ lik\ -\/1}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00005}\mbox{\hyperlink{eventManager_8h_ac17125b5eda25d9f8357bf2a430f178a}{00005}}\ \textcolor{keywordtype}{void}\ em\_clear(\textcolor{keywordtype}{int}*\ em\_queueUp,\ \textcolor{keywordtype}{int}*\ em\_queueDown)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00006}00006\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ N\_FLOORS;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00007}00007\ \ \ \ \ \ \ \ \ em\_queueUp[i]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00008}00008\ \ \ \ \ \ \ \ \ em\_queueDown[i]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00010}00010\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00011}00011\ \ \ \ \ \textcolor{comment}{//\ Skrur\ av\ alle\ lysene}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00012}00012\ \ \ \ \ lights\_floorOffAll();}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00015}00015\ \textcolor{comment}{//\ Sjekker\ hvilken\ knapp\ som\ er\ trykket\ på}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00016}\mbox{\hyperlink{eventManager_8h_aba7764066ca0d7627426d18a8fcc72d4}{00016}}\ \textcolor{keywordtype}{void}\ em\_checkBtnPressed(\textcolor{keywordtype}{int}*\ floor,\ \textcolor{keywordtype}{int}*\ btn)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00017}00017\ \ \ \ \ \textcolor{comment}{//\ Itererer\ gjennom\ alle\ knappene}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ f\ =\ 0;\ f\ <\ N\_FLOORS;\ f++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ b\ =\ 0;\ b\ <\ N\_BUTTONS;\ b++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_stopButton()\ ==\ 1)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ btnPressed\ =\ elevio\_callButton(f,\ b);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Endrer\ verdi\ kun\ dersom\ en\ knapp\ blir\ trykket\ på}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (btnPressed\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Skrur\ på\ etasjelyset\ NB!\ Kan\ hende\ det\ fysiske\ etasjelyset\ må\ skrus\ av\ manuelt!!}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elevio\_buttonLamp(f,\ b,\ btnPressed);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *floor\ =\ f;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *btn\ =\ b;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00034}00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00035}00035\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00038}00038\ \textcolor{comment}{//\ Oppdaterer\ currentFloor\ dersom\ den\ faktisk\ er\ ved\ en\ etasje}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00039}\mbox{\hyperlink{eventManager_8h_af7ce5c8fbd7390ed1662074b41ef4273}{00039}}\ \textcolor{keywordtype}{void}\ em\_getCurrentFloor(\textcolor{keywordtype}{int}*\ em\_currentFloor)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{int}\ newFloor\ =\ elevio\_floorSensor();}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00042}00042\ \ \ \ \ \textcolor{comment}{//\ Vil\ kun\ oppdatere\ dersom\ heisen\ faktisk\ er\ ved\ en\ etasje}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (newFloor\ !=\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00044}00044\ \ \ \ \ \ \ \ \ *em\_currentFloor\ =\ newFloor;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00045}00045\ \ \ \ \ \ \ \ \ elevio\_floorIndicator(newFloor);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00049}00049\ \textcolor{comment}{//\ Skal\ fjerne\ etasjen\ fra\ køen\ idet\ den\ når\ en\ etasje,\ ikke\ oftere!\ (kan\ være}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00050}00050\ \textcolor{comment}{//\ vanskelig\ med\ vår\ implementasjon?)}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00051}\mbox{\hyperlink{eventManager_8h_a62f90af474cbcb34c9b7e9f3fc89350f}{00051}}\ \textcolor{keywordtype}{void}\ em\_clearCurrentFloor(\textcolor{keywordtype}{int}*\ em\_currentFloor,\ \textcolor{keywordtype}{int}*\ em\_queueUp,}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ em\_queueDown)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00053}00053\ \ \ \ \ \textcolor{comment}{//\ Clears\ queue\ for\ both\ directions}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00054}00054\ \ \ \ \ em\_queueUp[*em\_currentFloor]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00055}00055\ \ \ \ \ em\_queueDown[*em\_currentFloor]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00057}00057\ \ \ \ \ \textcolor{comment}{//\ Skrur\ av\ lysene\ i\ etasjen}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00058}00058\ \ \ \ \ lights\_floorOffCurrent(em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00059}00059\ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00061}00061\ \textcolor{comment}{//\ int*\ em\_queueUp[4]\ =\ \{0,0,0,0\};}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00062}00062\ \textcolor{comment}{//\ int*\ em\_queueDown[4]\ =\ \{0,0,0,0\};}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00064}00064\ \textcolor{comment}{//\ Oppdaterer\ køene,\ burde\ kjøres\ kontinuerlig\ for\ denne\ er\ den\ som\ merker\ om\ en}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00065}00065\ \textcolor{comment}{//\ knapp\ blir\ trykket}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00066}00066\ \textcolor{keywordtype}{void}\ em\_updateQueues(\textcolor{keywordtype}{int}*\ em\_queueUp,\ \textcolor{keywordtype}{int}*\ em\_queueDown)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (elevio\_stopButton()\ ==\ 1)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00070}00070\ \ \ \ \ \textcolor{keywordtype}{int}\ f\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00071}00071\ \ \ \ \ \textcolor{keywordtype}{int}\ b\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00073}00073\ \ \ \ \ em\_checkBtnPressed(\&f,\ \&b);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00075}00075\ \ \ \ \ \textcolor{comment}{//\ Vil\ ikke\ oppdatere\ listen\ dersom\ f\ =\ -\/1,\ for\ ingen\ knapp\ har\ blitt}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00076}00076\ \ \ \ \ \textcolor{comment}{//\ trykket}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{if}\ (f\ ==\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00079}00079\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//\ Sjekker\ hvilken\ retning\ knappen\ skal}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{if}\ (b\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Legg\ til\ i\ oppover}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ em\_queueUp[f]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00085}00085\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (b\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Legg\ til\ i\ nedover}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ em\_queueDown[f]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00088}00088\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ b\ ==\ 2}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Legg\ til\ i\ begge\ etasjer\ (fordi\ du\ vil\ stoppe\ i\ denne\ etasjen}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ uavhengig\ av\ heisens\ retning)}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ em\_queueUp[f]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00093}00093\ \ \ \ \ \ \ \ \ em\_queueDown[f]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00094}00094\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00095}00095\ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00097}00097\ \textcolor{comment}{//\ int*\ em\_queueUp[4]\ =\ \{0,0,0,0\};}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00098}00098\ \textcolor{comment}{//\ int*\ em\_queueDown[4]\ =\ \{0,0,0,0\};}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00100}00100\ \textcolor{comment}{//\ Endrer\ nextFloor\ til\ den\ neste\ etasjen,\ ved\ å\ se\ gjennom\ listene\ basert\ på}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00101}00101\ \textcolor{comment}{//\ heisens\ lokasjon\ og\ retning}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00102}\mbox{\hyperlink{eventManager_8h_a11773e55db47a41e73825d573627a4b3}{00102}}\ \textcolor{keywordtype}{void}\ em\_getNextFloor(\textcolor{keywordtype}{int}*\ em\_nextFloor,\ \textcolor{keywordtype}{int}*\ em\_queueUp,\ \textcolor{keywordtype}{int}*\ em\_queueDown,}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ motorDirection,\ \textcolor{keywordtype}{int}*\ em\_currentFloor)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00104}00104\ \ \ \ \ \textcolor{comment}{//\ nextFloor\ er\ neste\ etasje}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00105}00105\ \ \ \ \ \textcolor{comment}{//\ em\_queueUp\ er\ køen\ oppover}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00106}00106\ \ \ \ \ \textcolor{comment}{//\ em\_queueDown\ er\ køen\ nedover}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00107}00107\ \ \ \ \ \textcolor{comment}{//\ motorDir\ er\ retningen\ til\ motoren\ (må\ kun\ være\ 0\ dersom\ køen\ er\ tom)}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00108}00108\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ den\ skal\ altså\ ikke\ være\ 0\ fordi\ den\ står\ stille\ i\ en\ etasje\ og}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00109}00109\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ venter}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00110}00110\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00111}00111\ \ \ \ \ \textcolor{comment}{//\ Vil\ nå\ sjekke\ listene\ for\ å\ finne\ neste\ etasje}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00112}00112\ \ \ \ \ \textcolor{comment}{//\ Tar\ nextFloor\ fra\ begge\ køene,\ dersom\ køene\ er\ tomme\ fra\ før}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00113}00113\ \ \ \ \ \textcolor{keywordflow}{if}\ (*em\_nextFloor\ ==\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ N\_FLOORS;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (em\_queueUp[i]\ !=\ 0\ ||\ em\_queueDown[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ i;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00119}00119\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00120}00120\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00121}00121\ \ \ \ \ \textcolor{comment}{//\ Sjekker\ listene\ i\ samme\ retning\ som\ heisen\ kjører}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00122}00122\ \ \ \ \ \textcolor{keywordflow}{if}\ ((*motorDirection\ ==\ 1)\ \&\&\ (*em\_currentFloor\ !=\ (N\_FLOORS\ -\/\ 1)))\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Heisen\ er\ på\ vei\ oppover,\ og\ den\ er\ ikke\ i\ øverste\ etasje}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ *em\_currentFloor\ +\ 1;\ i\ <\ N\_FLOORS;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Itererer\ gjennom\ lista,\ fra\ etasjen\ over\ og\ te\ topp}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (em\_queueUp[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ i;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00130}00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00131}00131\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ ((*motorDirection\ ==\ -\/1)\ \&\&\ (*em\_currentFloor\ !=\ 0))\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Heisen\ er\ på\ vei\ nedover\ og\ den\ er\ ikke\ i\ siste\ etasje,}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ekstrasjekken\ er\ for\ å\ ikke\ iterere\ utenfor\ arrayet,}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ kan\ det\ skape\ problemer?\ Pass\ på\ å\ bytte\ motorDir\ idet}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ den\ når\ topp\ og\ bunn-\/etasjen}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ *em\_currentFloor\ -\/\ 1;\ i\ >=\ 0;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ i-\/-\/)\ \{\ \textcolor{comment}{//\ Itererer\ gjennom\ lista\ baklengs,\ fra\ etasjen\ under\ og\ te}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ bunn}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (em\_queueDown[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ i;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00143}00143\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00144}00144\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00146}00146\ \ \ \ \ \textcolor{comment}{//\ Hvis\ den\ ikke\ finner\ noe:\ sjekker\ listene\ i\ motsatt\ retning\ som\ heisen}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00147}00147\ \ \ \ \ \textcolor{comment}{//\ kjører}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00148}00148\ \ \ \ \ \textcolor{keywordflow}{if}\ (*motorDirection\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ N\_FLOORS\ -\/\ 1;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ På\ vei\ oppover,\ vil\ hente\ fra\ øverste\ nedover-\/bestilling}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ og\ ta\ alle\ den\ retningen}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (em\_queueDown[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ i;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00156}00156\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00157}00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ N\_FLOORS;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ På\ vei\ oppover,\ vil\ hente\ fra\ øverste\ nedover-\/bestilling}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ og\ ta\ alle\ den\ retningen}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (em\_queueUp[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ i;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00164}00164\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00165}00165\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*motorDirection\ ==\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00166}00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ N\_FLOORS;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (em\_queueUp[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ i;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00171}00171\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ N\_FLOORS\ -\/\ 1;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (em\_queueDown[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *em\_nextFloor\ =\ i;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00177}00177\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00178}00178\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00180}00180\ \ \ \ \ \textcolor{comment}{//\ I\ teorien\ er\ det\ nå\ ingen\ bestillinger}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00181}00181\ \ \ \ \ *em\_nextFloor\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00182}00182\ \};}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00184}00184\ \textcolor{comment}{//\ Printer\ køen\ og\ nextFloor\ til\ terminalen\ for\ enklere\ debugging}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00185}\mbox{\hyperlink{eventManager_8h_a472dc9fdbd81a78c9a8fd4eda228b9ee}{00185}}\ \textcolor{keywordtype}{void}\ em\_printQueue(\textcolor{keywordtype}{int}*\ em\_nextFloor,\ \textcolor{keywordtype}{int}*\ em\_currentFloor,\ \textcolor{keywordtype}{int}*\ motorDirection,\ \textcolor{keywordtype}{int}*\ em\_queueUp,\ \textcolor{keywordtype}{int}*\ em\_queueDown)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00186}00186\ \ \ \ \ printf(\textcolor{stringliteral}{"{}nF:\ \%d\ \ \ |\ \ \ "{}},\ *em\_nextFloor);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00187}00187\ \ \ \ \ printf(\textcolor{stringliteral}{"{}cF:\ \%d\ \ \ |\ \ \ "{}},\ *em\_currentFloor);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00188}00188\ \ \ \ \ printf(\textcolor{stringliteral}{"{}mD:\ \%d\ \ \ |\ \ \ "{}},\ *motorDirection);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00190}00190\ \ \ \ \ printf(\textcolor{stringliteral}{"{}qUp:\ ["{}});}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ N\_FLOORS\ -\/\ 1;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00192}00192\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%d,\ "{}},\ em\_queueUp[i]);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00193}00193\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00194}00194\ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%d]\ \ \ |\ \ \ "{}},\ em\_queueUp[N\_FLOORS\ -\/\ 1]);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00196}00196\ \ \ \ \ printf(\textcolor{stringliteral}{"{}qDown:\ ["{}});}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00197}00197\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ N\_FLOORS\ -\/\ 1;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00198}00198\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%d,\ "{}},\ em\_queueDown[i]);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00199}00199\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00200}00200\ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%d]\(\backslash\)n"{}},\ em\_queueDown[N\_FLOORS\ -\/\ 1]);}
+\DoxyCodeLine{\Hypertarget{eventManager_8c_source_l00201}00201\ \}}
+
+\end{DoxyCode}

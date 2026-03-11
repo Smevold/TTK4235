@@ -1,0 +1,174 @@
+\doxysection{source/custom\+\_\+functions/event\+Manager.h File Reference}
+\hypertarget{eventManager_8h}{}\label{eventManager_8h}\index{source/custom\_functions/eventManager.h@{source/custom\_functions/eventManager.h}}
+
+
+Denne skal følge med på knappene og bruke en algoritme til å finne ut hvilken etasje som er den neste.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}../driver/elevio.\+h"{}}\newline
+{\ttfamily \#include "{}lights.\+h"{}}\newline
+Include dependency graph for event\+Manager.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{eventManager_8h_ac17125b5eda25d9f8357bf2a430f178a}{em\+\_\+clear}} (int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down)
+\begin{DoxyCompactList}\small\item\em Sletter hele kø-\/en til Event Manageren. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{eventManager_8h_aba7764066ca0d7627426d18a8fcc72d4}{em\+\_\+check\+Btn\+Pressed}} (int \texorpdfstring{$\ast$}{*}floor, int \texorpdfstring{$\ast$}{*}btn)
+\begin{DoxyCompactList}\small\item\em Sjekker hvilke knakker som blir trykket. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{eventManager_8h_af7ce5c8fbd7390ed1662074b41ef4273}{em\+\_\+get\+Current\+Floor}} (int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor)
+\begin{DoxyCompactList}\small\item\em Sjekker hvilken etasje heisen er i, og endrer kanskje current\+Floor. Nullindeksert. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{eventManager_8h_a62f90af474cbcb34c9b7e9f3fc89350f}{em\+\_\+clear\+Current\+Floor}} (int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down)
+\begin{DoxyCompactList}\small\item\em Fjerner current\+Floor fra heiskøen i begge retninger. current\+Floor trenger ikke oppdateres før denne funksjonen kalles. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{eventManager_8h_a393f6210486de2ccbf8ca1e994b0cef0}{em\+\_\+update\+Queues}} (int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down)
+\item 
+void \mbox{\hyperlink{eventManager_8h_a11773e55db47a41e73825d573627a4b3}{em\+\_\+get\+Next\+Floor}} (int \texorpdfstring{$\ast$}{*}em\+\_\+next\+Floor, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down, int \texorpdfstring{$\ast$}{*}motor\+Direction, int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor)
+\begin{DoxyCompactList}\small\item\em Genererer etasjerekkefølge basert på \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{eventManager_8h_a472dc9fdbd81a78c9a8fd4eda228b9ee}{em\+\_\+print\+Queue}} (int \texorpdfstring{$\ast$}{*}em\+\_\+next\+Floor, int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor, int \texorpdfstring{$\ast$}{*}motor\+Direction, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Up, int \texorpdfstring{$\ast$}{*}em\+\_\+queue\+Down)
+\begin{DoxyCompactList}\small\item\em Skriver kø og next\+Floor til terminalen for debugging. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Denne skal følge med på knappene og bruke en algoritme til å finne ut hvilken etasje som er den neste. 
+
+
+
+Definition in file \mbox{\hyperlink{eventManager_8h_source}{event\+Manager.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{eventManager_8h_aba7764066ca0d7627426d18a8fcc72d4}\label{eventManager_8h_aba7764066ca0d7627426d18a8fcc72d4} 
+\index{eventManager.h@{eventManager.h}!em\_checkBtnPressed@{em\_checkBtnPressed}}
+\index{em\_checkBtnPressed@{em\_checkBtnPressed}!eventManager.h@{eventManager.h}}
+\doxysubsubsection{\texorpdfstring{em\_checkBtnPressed()}{em\_checkBtnPressed()}}
+{\footnotesize\ttfamily void em\+\_\+check\+Btn\+Pressed (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{btn }\end{DoxyParamCaption})}
+
+
+
+Sjekker hvilke knakker som blir trykket. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em f} & Pass-\/by-\/reference\+: Hvilken etasje som har blitt trykket på, {\ttfamily f} er nullindeksert \\
+\hline
+\mbox{\texttt{ in}}  & {\em b} & Pass-\/by-\/reference\+: Hvilken retning som har blitt trykket på, 0 = opp, 1 = ned, 2 = fra kabinen\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Dersom {\ttfamily f} er lik -\/1, skal dette telle som at ingen etasjeknapp er trykket på 
+\end{DoxyWarning}
+
+
+Definition at line \mbox{\hyperlink{eventManager_8c_source_l00016}{16}} of file \mbox{\hyperlink{eventManager_8c_source}{event\+Manager.\+c}}.
+
+\Hypertarget{eventManager_8h_ac17125b5eda25d9f8357bf2a430f178a}\label{eventManager_8h_ac17125b5eda25d9f8357bf2a430f178a} 
+\index{eventManager.h@{eventManager.h}!em\_clear@{em\_clear}}
+\index{em\_clear@{em\_clear}!eventManager.h@{eventManager.h}}
+\doxysubsubsection{\texorpdfstring{em\_clear()}{em\_clear()}}
+{\footnotesize\ttfamily void em\+\_\+clear (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down }\end{DoxyParamCaption})}
+
+
+
+Sletter hele kø-\/en til Event Manageren. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em em\+\_\+queue} & Peker til køen som programmet bruker til å finne neste etasje \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{eventManager_8c_source_l00005}{5}} of file \mbox{\hyperlink{eventManager_8c_source}{event\+Manager.\+c}}.
+
+\Hypertarget{eventManager_8h_a62f90af474cbcb34c9b7e9f3fc89350f}\label{eventManager_8h_a62f90af474cbcb34c9b7e9f3fc89350f} 
+\index{eventManager.h@{eventManager.h}!em\_clearCurrentFloor@{em\_clearCurrentFloor}}
+\index{em\_clearCurrentFloor@{em\_clearCurrentFloor}!eventManager.h@{eventManager.h}}
+\doxysubsubsection{\texorpdfstring{em\_clearCurrentFloor()}{em\_clearCurrentFloor()}}
+{\footnotesize\ttfamily void em\+\_\+clear\+Current\+Floor (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down }\end{DoxyParamCaption})}
+
+
+
+Fjerner current\+Floor fra heiskøen i begge retninger. current\+Floor trenger ikke oppdateres før denne funksjonen kalles. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em current\+Floor} & Pass-\/by-\/reference\+: Holder styr på gjeldene etasje \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+queue\+Up} & Pass-\/by-\/reference\+: Heiskøen i oppover-\/retning \\
+\hline
+\mbox{\texttt{ in}}  & {\em em\+\_\+queue\+Down} & Pass-\/by-\/reference\+: Heiskøen i nedover-\/retning \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{eventManager_8c_source_l00051}{51}} of file \mbox{\hyperlink{eventManager_8c_source}{event\+Manager.\+c}}.
+
+\Hypertarget{eventManager_8h_af7ce5c8fbd7390ed1662074b41ef4273}\label{eventManager_8h_af7ce5c8fbd7390ed1662074b41ef4273} 
+\index{eventManager.h@{eventManager.h}!em\_getCurrentFloor@{em\_getCurrentFloor}}
+\index{em\_getCurrentFloor@{em\_getCurrentFloor}!eventManager.h@{eventManager.h}}
+\doxysubsubsection{\texorpdfstring{em\_getCurrentFloor()}{em\_getCurrentFloor()}}
+{\footnotesize\ttfamily void em\+\_\+get\+Current\+Floor (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor }\end{DoxyParamCaption})}
+
+
+
+Sjekker hvilken etasje heisen er i, og endrer kanskje current\+Floor. Nullindeksert. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em current\+Floor} & current\+Floor er en peker til forrige etasje den detekterte\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Dersom heisen er mellom etasjer, vil den ikke oppdatere verdien 
+\end{DoxyWarning}
+
+
+Definition at line \mbox{\hyperlink{eventManager_8c_source_l00039}{39}} of file \mbox{\hyperlink{eventManager_8c_source}{event\+Manager.\+c}}.
+
+\Hypertarget{eventManager_8h_a11773e55db47a41e73825d573627a4b3}\label{eventManager_8h_a11773e55db47a41e73825d573627a4b3} 
+\index{eventManager.h@{eventManager.h}!em\_getNextFloor@{em\_getNextFloor}}
+\index{em\_getNextFloor@{em\_getNextFloor}!eventManager.h@{eventManager.h}}
+\doxysubsubsection{\texorpdfstring{em\_getNextFloor()}{em\_getNextFloor()}}
+{\footnotesize\ttfamily void em\+\_\+get\+Next\+Floor (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+next\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down,  }\item[{int \texorpdfstring{$\ast$}{*}}]{motor\+Direction,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor }\end{DoxyParamCaption})}
+
+
+
+Genererer etasjerekkefølge basert på 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em next\+Floor} & next\+Floor er en peker til forrige etasje heisen var på vei til \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{eventManager_8c_source_l00102}{102}} of file \mbox{\hyperlink{eventManager_8c_source}{event\+Manager.\+c}}.
+
+\Hypertarget{eventManager_8h_a472dc9fdbd81a78c9a8fd4eda228b9ee}\label{eventManager_8h_a472dc9fdbd81a78c9a8fd4eda228b9ee} 
+\index{eventManager.h@{eventManager.h}!em\_printQueue@{em\_printQueue}}
+\index{em\_printQueue@{em\_printQueue}!eventManager.h@{eventManager.h}}
+\doxysubsubsection{\texorpdfstring{em\_printQueue()}{em\_printQueue()}}
+{\footnotesize\ttfamily void em\+\_\+print\+Queue (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+next\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor,  }\item[{int \texorpdfstring{$\ast$}{*}}]{motor\+Direction,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down }\end{DoxyParamCaption})}
+
+
+
+Skriver kø og next\+Floor til terminalen for debugging. 
+
+
+
+Definition at line \mbox{\hyperlink{eventManager_8c_source_l00185}{185}} of file \mbox{\hyperlink{eventManager_8c_source}{event\+Manager.\+c}}.
+
+\Hypertarget{eventManager_8h_a393f6210486de2ccbf8ca1e994b0cef0}\label{eventManager_8h_a393f6210486de2ccbf8ca1e994b0cef0} 
+\index{eventManager.h@{eventManager.h}!em\_updateQueues@{em\_updateQueues}}
+\index{em\_updateQueues@{em\_updateQueues}!eventManager.h@{eventManager.h}}
+\doxysubsubsection{\texorpdfstring{em\_updateQueues()}{em\_updateQueues()}}
+{\footnotesize\ttfamily void em\+\_\+update\+Queues (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Up,  }\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+queue\+Down }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eventManager_8c_source_l00066}{66}} of file \mbox{\hyperlink{eventManager_8c_source}{event\+Manager.\+c}}.
+

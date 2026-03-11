@@ -35,7 +35,7 @@ void state_startUp() {
 int state_stationary(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     int* em_currentFloor, int* motorDirection) {
 
-    printf("=== Entering Stationary State ===\n");
+    // printf("=== Entering Stationary State ===\n");
 
     while (1) {
         mDirStop(motorDirection);
@@ -43,15 +43,15 @@ int state_stationary(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
             em_currentFloor);
         em_getCurrentFloor(em_currentFloor);
-        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-            em_queueDown);
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+            // em_queueDown);
 
         if (elevio_stopButton() == 1) {
             elevio_stopLamp(1);
             em_clear(em_queueUp, em_queueDown);
             state_openDoor(em_queueUp, em_queueDown, em_nextFloor,
                 em_currentFloor, motorDirection);
-            printf("=== Entering Stationary State ===\n");
+            // printf("=== Entering Stationary State ===\n");
         }
 
         if ((*em_nextFloor != -1) && (*em_nextFloor != *em_currentFloor)) {
@@ -74,14 +74,14 @@ int state_stationary(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     int* em_currentFloor, int* motorDirection) {
 
-    printf("=== Entering Moving State ===\n");
+    // printf("=== Entering Moving State ===\n");
 
     // em_updateQueues(em_queueUp, em_queueDown);
     // em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
     // em_currentFloor); em_getCurrentFloor(em_currentFloor);
 
-    em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-        em_queueDown);
+    // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+    //     em_queueDown);
 
     while (*em_nextFloor > *em_currentFloor) {
 
@@ -92,9 +92,9 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
         em_getCurrentFloor(em_currentFloor);
 
-        printf("Moving Upwards\n");
-        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-            em_queueDown);
+        // printf("Moving Upwards\n");
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+        //     em_queueDown);
 
         em_updateQueues(em_queueUp, em_queueDown);
         em_getCurrentFloor(em_currentFloor);
@@ -118,9 +118,9 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
         em_getCurrentFloor(em_currentFloor);
 
-        printf("Moving Downwards\n");
-        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-            em_queueDown);
+        // printf("Moving Downwards\n");
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+        //     em_queueDown);
 
         em_updateQueues(em_queueUp, em_queueDown);
         em_getCurrentFloor(em_currentFloor);
@@ -135,7 +135,7 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         }
     }
 
-    printf("Exiting Moving State\n");
+    // printf("Exiting Moving State\n");
 
     return 0;
 }
@@ -149,13 +149,13 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     }
 
     em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
-    em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-        em_queueDown);
+    // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+    //     em_queueDown);
 
-    printf("=== Entering Open Door State ===\n");
+    // printf("=== Entering Open Door State ===\n");
 
     if (elevio_floorSensor() != -1) {
-        printf("Opening the door\n");
+        // printf("Opening the door\n");
         elevio_doorOpenLamp(1);
         // Lamp stuff
     }
@@ -166,7 +166,7 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
     mDirStop(motorDirection);
 
-    printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start, t_end);
+    // printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start, t_end);
 
     em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
 
@@ -180,11 +180,11 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
             break;
         }
 
-        printf("The time is now: %lu\n", t_start);
+        // printf("The time is now: %lu\n", t_start);
 
         em_updateQueues(em_queueUp, em_queueDown);
-        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-            em_queueDown);
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+        //     em_queueDown);
         em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
             em_currentFloor);
         // em_getCurrentFloor(em_currentFloor);
@@ -201,17 +201,17 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
             timer_start(&t_start, &t_end);
             em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
             *em_nextFloor = -1;
-            printf("Opening door on same floor\n");
+            // printf("Opening door on same floor\n");
         }
     }
-    printf("Closing the Doors\n");
+    // printf("Closing the Doors\n");
     elevio_doorOpenLamp(0);
     em_updateQueues(em_queueUp, em_queueDown);
     em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
         em_currentFloor);
     em_getCurrentFloor(em_currentFloor);
-    em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-        em_queueDown);
+    // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+    //     em_queueDown);
 
     return 1;
 }
