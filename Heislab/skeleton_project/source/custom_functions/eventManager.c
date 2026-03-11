@@ -94,8 +94,17 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
     // motorDir er retningen til motoren (må kun være 0 dersom køen er tom)
     //          den skal altså ikke være 0 fordi den står stille i en etasje og
     //          venter
-
+    
     // Vil nå sjekke listene for å finne neste etasje
+    // Tar nextFloor fra begge køene, dersom køene er tomme fra før
+    if (*em_nextFloor == -1) {
+        for (int i = 0; i < N_FLOORS; i++) {
+            if (em_queueUp[i] != 0 || em_queueDown[i] != 0) {
+                *em_nextFloor = i;
+                return;
+            }
+        }
+    }
     // Sjekker listene i samme retning som heisen kjører
     if ((*motorDirection == 1) && (*em_currentFloor != (N_FLOORS - 1))) {
         // Heisen er på vei oppover, og den er ikke i øverste etasje
@@ -121,22 +130,13 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
         }
     }
 
-    // Tar nextFloor fra begge køene, dersom køene er tomme fra før
-    if (*em_nextFloor == -1) {
-        for (int i = 0; i < N_FLOORS; i++) {
-            if (em_queueUp[i] != 0 || em_queueDown[i] != 0) {
-                *em_nextFloor = i;
-                return;
-            }
-        }
-    }
     // Hvis den ikke finner noe: sjekker listene i motsatt retning som heisen
     // kjører
     if (*motorDirection == 1) {
         for (int i = N_FLOORS - 1; i >= 0; i--) {
             // På vei oppover, vil hente fra øverste nedover-bestilling
             // og ta alle den retningen
-            if (em_queueDown != 0) {
+            if (em_queueDown[i] != 0) {
                 *em_nextFloor = i;
                 return;
             }
@@ -144,20 +144,20 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
         for (int i = 0; i < N_FLOORS; i++) {
             // På vei oppover, vil hente fra øverste nedover-bestilling
             // og ta alle den retningen
-            if (em_queueUp != 0) {
+            if (em_queueUp[i] != 0) {
                 *em_nextFloor = i;
                 return;
             }
         }
     } else if (*motorDirection == -1) {
         for (int i = 0; i < N_FLOORS; i++) {
-            if (em_queueUp != 0) {
+            if (em_queueUp[i] != 0) {
                 *em_nextFloor = i;
                 return;
             }
         }
         for (int i = N_FLOORS - 1; i >= 0; i--) {
-            if (em_queueDown != 0) {
+            if (em_queueDown[i] != 0) {
                 *em_nextFloor = i;
                 return;
             }
