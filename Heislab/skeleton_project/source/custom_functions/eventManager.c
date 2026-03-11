@@ -47,9 +47,6 @@ void em_getCurrentFloor(int* em_currentFloor) {
 // vanskelig med vår implementasjon?)
 void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp,
                           int* em_queueDown) {
-    // Chech which floor the elevator is on
-    em_getCurrentFloor(em_currentFloor);
-
     // Clears queue for both directions
     em_queueUp[*em_currentFloor] = 0;
     em_queueDown[*em_currentFloor] = 0;
