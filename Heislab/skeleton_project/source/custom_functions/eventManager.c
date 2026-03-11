@@ -1,11 +1,15 @@
 #include "eventManager.h"
+#include "lights.h"
 
 // Clear funksjon - tømmer historikken og setter nextFloor lik -1
 void em_clear(int* em_queueUp, int* em_queueDown) {
     for (int i = 0; i < N_FLOORS; ++i) {
         em_queueUp[i] = 0;
         em_queueDown[i] = 0;
+
     }
+    // Skrur av alle lysene
+    lights_floorOffAll();
 }
 
 // Sjekker hvilken knapp som er trykket på
@@ -17,7 +21,9 @@ void em_checkBtnPressed(int* floor, int* btn) {
             
             // Endrer verdi kun dersom en knapp blir trykket på
             if (btnPressed == 1) {
+                // Skrur på etasjelyset NB! Kan hende det fysiske etasjelyset må skrus av manuelt!!
                 elevio_buttonLamp(f, b, btnPressed);
+
                 *floor = f;
                 *btn = b;
                 return;
@@ -33,6 +39,7 @@ void em_getCurrentFloor(int* em_currentFloor) {
     // Vil kun oppdatere dersom heisen faktisk er ved en etasje
     if (newFloor != -1) {
         *em_currentFloor = newFloor;
+        elevio_floorIndicator(newFloor);
     }
 }
 
@@ -40,10 +47,12 @@ void em_getCurrentFloor(int* em_currentFloor) {
 // vanskelig med vår implementasjon?)
 void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp,
                           int* em_queueDown) {
-
     // Clears queue for both directions
     em_queueUp[*em_currentFloor] = 0;
     em_queueDown[*em_currentFloor] = 0;
+
+    // Skrur av lysene i etasjen
+    lights_floorOffCurrent(em_currentFloor);
 }
 
 // int* em_queueUp[4] = {0,0,0,0};
