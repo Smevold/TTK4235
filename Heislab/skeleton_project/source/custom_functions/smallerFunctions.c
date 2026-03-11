@@ -12,8 +12,6 @@ void mDirStop(int *MotorDirection){
     elevio_motorDirection(DIRN_STOP);
 }
 
-#include "lights.h"
-
 void lights_floorOffCurrent(int* em_currentFloor) {
     // Skrur av lysene i etasjen
     for (int b = 0; b < 3; b++) {

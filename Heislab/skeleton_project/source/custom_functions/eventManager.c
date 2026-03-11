@@ -1,5 +1,4 @@
 #include "eventManager.h"
-#include "lights.h"
 
 // Clear funksjon - tømmer historikken og setter nextFloor lik -1
 void em_clear(int* em_queueUp, int* em_queueDown) {
@@ -19,7 +18,7 @@ void em_checkBtnPressed(int* floor, int* btn) {
         for (int b = 0; b < N_BUTTONS; b++) {
 
             if (elevio_stopButton() == 1) return;
-            
+
             int btnPressed = elevio_callButton(f, b);
             
             // Endrer verdi kun dersom en knapp blir trykket på
