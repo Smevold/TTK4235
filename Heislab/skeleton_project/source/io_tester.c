@@ -5,9 +5,7 @@
 #include <unistd.h>
 #include "driver/elevio.h"
 
-/**
-* @brief Starter heisen og finner en definert etasje å starte fra.
-*/
+
 void ioTest_startUp() {
     elevio_init();
 
