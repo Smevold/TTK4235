@@ -6,19 +6,21 @@
 #include "stateMachine.h"
 #include <unistd.h>
 
-int main (){
-    int stop = 1;
+int main() {
+    int stop            = 1;
+    int em_nextFloor    = -1;
+    int em_currentFloor = -1;
+    int motorDirection  = 0;
+
     int em_queueUp[N_FLOORS];
     int em_queueDown[N_FLOORS];
-    int em_nextFloor = -1; int em_currentFloor = -1; int motorDirection = 0;
 
     em_clear(em_queueUp, em_queueDown);
 
     state_startUp();
 
-    /* int test = state_openDoor(em_queueUp, em_queueDown, 
-        &em_nextFloor, &em_currentFloor, 
-        &motorDirection
+    /* int test = state_openDoor(em_queueUp, em_queueDown,
+        &em_nextFloor, &em_currentFloor, &motorDirection
     );
     if (test == 1) {
         printf("Hurray\n");
@@ -26,30 +28,24 @@ int main (){
         printf("BUUUU\n");
     } */
 
-    while(1) {
+    while (1) {
         while (stop != 1) {
-            stop = state_move(em_queueUp, em_queueDown, 
-                &em_nextFloor, &em_currentFloor, 
-                &motorDirection
-            );
+            stop = state_move(em_queueUp, em_queueDown, &em_nextFloor,
+                &em_currentFloor, &motorDirection);
             if (stop == 1) {
                 break;
             }
-            stop = state_openDoor(em_queueUp, em_queueDown,
-                &em_nextFloor, &em_currentFloor, 
-                &motorDirection
-            );
+            stop = state_openDoor(em_queueUp, em_queueDown, &em_nextFloor,
+                &em_currentFloor, &motorDirection);
         }
-        stop = state_stationary(em_queueUp, em_queueDown,
-            &em_nextFloor, &em_currentFloor, 
-            &motorDirection
-        );
+        stop = state_stationary(em_queueUp, em_queueDown, &em_nextFloor,
+            &em_currentFloor, &motorDirection);
     }
 }
 
 /* int main(){
     elevio_init();
-    
+
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
@@ -79,16 +75,14 @@ int main (){
         } else {
             elevio_stopLamp(0);
         }
-        
+
         if(elevio_stopButton()){
             elevio_motorDirection(DIRN_STOP);
             break;
         }
-        
+
         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
 
     return 0;
 } */
-
-
