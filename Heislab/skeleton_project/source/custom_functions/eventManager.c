@@ -83,8 +83,18 @@ void em_getNextFloor(int *nextFloor, int* em_queueUp, int* em_queueDown, int* mo
     // em_queueDown er køen nedover
     // motorDir er retningen til motoren (må kun være 0 dersom køen er tom)
     //          den skal altså ikke være 0 fordi den står stille i en etasje og venter
-
+    
 // Vil nå sjekke listene for å finne neste etasje
+    // Tar nextFloor fra begge køene, dersom køene er tomme fra før
+    if (*nextFloor == -1) {
+        for (int i = 0; i < N_FLOORS; i++) {
+            if (em_queueUp[i] != 0 || em_queueDown[i] != 0) {
+                *nextFloor = i;
+                return;
+            }
+        }
+    }
+
     // Sjekker listene i samme retning som heisen kjører
     if ((*motorDir == 1) && (*currentFloor != (N_FLOORS -1))) { // Heisen er på vei oppover, og den er ikke i øverste etasje
         for (int i = *currentFloor + 1; i < N_FLOORS; i++) { // Itererer gjennom lista, fra etasjen over og te topp
