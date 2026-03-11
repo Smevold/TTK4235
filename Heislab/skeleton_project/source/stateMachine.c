@@ -41,9 +41,6 @@ int state_stationary(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
             em_currentFloor);
         em_getCurrentFloor(em_currentFloor);
         em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
-        printf("Next Floor: %d\n", *em_nextFloor);
-        printf("Current Floor: %d\n", *em_currentFloor);
-        printf("Motor Direction: %d\n", *motorDirection);
 
         if (elevio_stopButton() == 1) {
             em_clear(em_queueUp, em_queueDown);
@@ -69,15 +66,14 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     // em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
     // em_currentFloor); em_getCurrentFloor(em_currentFloor);
 
-    printf("Next Floor: %d\n", *em_nextFloor);
-    printf("Current Floor: %d\n", *em_currentFloor);
+    em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
 
     while (*em_nextFloor > *em_currentFloor) {
 
+        em_getCurrentFloor(em_currentFloor);
+
         printf("Moving Upwards\n");
-        printf("Next Floor: %d\n", *em_nextFloor);
-        printf("Current Floor: %d\n", *em_currentFloor);
-        printf("Motor Direction: %d\n", *motorDirection);
+        em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
 
         mDirUp(motorDirection);
 
@@ -98,9 +94,7 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         em_getCurrentFloor(em_currentFloor);
 
         printf("Moving Downwards\n");
-        printf("Next Floor: %d\n", *em_nextFloor);
-        printf("Current Floor: %d\n", *em_currentFloor);
-        printf("Motor Direction: %d\n", *motorDirection);
+        em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
 
         mDirDown(motorDirection);
 
@@ -114,8 +108,6 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
         em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
             em_currentFloor);
-
-        em_getCurrentFloor(em_currentFloor);
     }
 
     printf("Exiting Moving State\n");
