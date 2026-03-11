@@ -40,7 +40,7 @@ int state_stationary(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
             em_currentFloor);
         em_getCurrentFloor(em_currentFloor);
-        em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
+        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
 
         if (elevio_stopButton() == 1) {
             em_clear(em_queueUp, em_queueDown);
@@ -66,16 +66,19 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
     // em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
     // em_currentFloor); em_getCurrentFloor(em_currentFloor);
 
-    em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
+    em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
 
     while (*em_nextFloor > *em_currentFloor) {
+
+        mDirUp(motorDirection);
+
+        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
+            em_currentFloor);
 
         em_getCurrentFloor(em_currentFloor);
 
         printf("Moving Upwards\n");
-        em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
-
-        mDirUp(motorDirection);
+        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
 
         em_updateQueues(em_queueUp, em_queueDown);
         em_getCurrentFloor(em_currentFloor);
@@ -85,18 +88,21 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
             return 1;
         }
 
-        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
-            em_currentFloor);
+        
     }
 
     while (*em_nextFloor < *em_currentFloor) {
 
+        mDirDown(motorDirection);
+
+        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
+            em_currentFloor);
+
         em_getCurrentFloor(em_currentFloor);
+        
 
         printf("Moving Downwards\n");
-        em_printQueue(em_nextFloor, em_queueUp, em_queueDown);
-
-        mDirDown(motorDirection);
+        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
 
         em_updateQueues(em_queueUp, em_queueDown);
         em_getCurrentFloor(em_currentFloor);
@@ -106,8 +112,6 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
             return 1;
         }
 
-        em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
-            em_currentFloor);
     }
 
     printf("Exiting Moving State\n");
@@ -130,10 +134,16 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
     printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start, t_end);
 
-    int timeOut = timer_isTimeOut(&t_start, &t_end);
+    while (1) {
 
-    while (timeOut == 0) {
-        timeOut = timer_isTimeOut(&t_start, &t_end);
+        if (timer_isTimeOut(&t_start, &t_end)) {
+            break;
+        }
+
+        printf("The time is now: %lu\n", t_start);
+
+        em_updateQueues(em_queueUp, em_queueDown);
+        em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp, em_queueDown);
 
         if (elevio_stopButton() == 1) {
             timer_start(&t_start, &t_end);
@@ -143,6 +153,7 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
             timer_start(&t_start, &t_end);
             // printf("Obstruction activated\n");
         }
+
     }
     printf("Timer done\n");
     return 1;
