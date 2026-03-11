@@ -37,13 +37,13 @@ void em_getCurrentFloor(int* currentFloor) {
 }
 
 // Skal fjerne etasjen fra køen idet den når en etasje, ikke oftere! (kan være vanskelig med vår implementasjon?)
-void em_clearCurrentFloor(int currentFloor, int* em_queueUp, int* em_ququeDown) {
+void em_clearCurrentFloor(int currentFloor, int* em_queueUp, int* em_queueDown) {
     // Chech which floor the elevator is on
     em_getCurrentFloor(&currentFloor);
 
     // Clears queue for both directions
     em_queueUp[currentFloor] = 0;
-    em_ququeDown[currentFloor] = 0;
+    em_queueDown[currentFloor] = 0;
 }
 
 // int* em_queueUp[4] = {0,0,0,0};
