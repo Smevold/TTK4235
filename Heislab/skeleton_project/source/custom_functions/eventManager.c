@@ -3,9 +3,8 @@
 // Clear funksjon - tømmer historikken og setter nextFloor lik -1
 void em_clear(int* em_queueUp, int* em_queueDown) {
     for (int i = 0; i < N_FLOORS; ++i) {
-        em_queueUp[i] = 0;
+        em_queueUp[i]   = 0;
         em_queueDown[i] = 0;
-
     }
     // Skrur av alle lysene
     lights_floorOffAll();
@@ -17,17 +16,19 @@ void em_checkBtnPressed(int* floor, int* btn) {
     for (int f = 0; f < N_FLOORS; f++) {
         for (int b = 0; b < N_BUTTONS; b++) {
 
-            if (elevio_stopButton() == 1) return;
+            if (elevio_stopButton() == 1)
+                return;
 
             int btnPressed = elevio_callButton(f, b);
-            
+
             // Endrer verdi kun dersom en knapp blir trykket på
             if (btnPressed == 1) {
-                // Skrur på etasjelyset NB! Kan hende det fysiske etasjelyset må skrus av manuelt!!
+                // Skrur på etasjelyset NB! Kan hende det fysiske etasjelyset må
+                // skrus av manuelt!!
                 elevio_buttonLamp(f, b, btnPressed);
 
                 *floor = f;
-                *btn = b;
+                *btn   = b;
                 return;
             }
         }
@@ -47,10 +48,10 @@ void em_getCurrentFloor(int* em_currentFloor) {
 
 // Skal fjerne etasjen fra køen idet den når en etasje, ikke oftere! (kan være
 // vanskelig med vår implementasjon?)
-void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp,
-                          int* em_queueDown) {
+void em_clearCurrentFloor(
+    int* em_currentFloor, int* em_queueUp, int* em_queueDown) {
     // Clears queue for both directions
-    em_queueUp[*em_currentFloor] = 0;
+    em_queueUp[*em_currentFloor]   = 0;
     em_queueDown[*em_currentFloor] = 0;
 
     // Skrur av lysene i etasjen
@@ -64,7 +65,15 @@ void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp,
 // knapp blir trykket
 void em_updateQueues(int* em_queueUp, int* em_queueDown) {
 
-    if (elevio_stopButton() == 1) return;
+    // NBNB! for bedre heis: checkBtnPressed vil nå alltid returnere idet en
+    // knapp trykkes. Altså vil ikke heisen registrere tastetrykk som kommer
+    // senere i iterasjonen enn den som holdes inne. Dette fikses ved å endre så
+    // checkBtnPressed kaller updateQueues heller enn motsatt. Slik kan du
+    // fjerne return fra checkBtnPressed og oppdatere køen inni hver iterasjon
+    // hvor en knapp blir trykket.
+
+    if (elevio_stopButton() == 1)
+        return;
 
     int f = -1;
     int b = -1;
@@ -88,7 +97,7 @@ void em_updateQueues(int* em_queueUp, int* em_queueDown) {
         // b == 2
         // Legg til i begge etasjer (fordi du vil stoppe i denne etasjen
         // uavhengig av heisens retning)
-        em_queueUp[f] = 1;
+        em_queueUp[f]   = 1;
         em_queueDown[f] = 1;
     }
 }
@@ -99,14 +108,14 @@ void em_updateQueues(int* em_queueUp, int* em_queueDown) {
 // Endrer nextFloor til den neste etasjen, ved å se gjennom listene basert på
 // heisens lokasjon og retning
 void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
-                     int* motorDirection, int* em_currentFloor) {
+    int* motorDirection, int* em_currentFloor) {
     // nextFloor er neste etasje
     // em_queueUp er køen oppover
     // em_queueDown er køen nedover
     // motorDir er retningen til motoren (må kun være 0 dersom køen er tom)
     //          den skal altså ikke være 0 fordi den står stille i en etasje og
     //          venter
-    
+
     // Vil nå sjekke listene for å finne neste etasje
     // Tar nextFloor fra begge køene, dersom køene er tomme fra før
     if (*em_nextFloor == -1) {
@@ -133,8 +142,8 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
         // kan det skape problemer? Pass på å bytte motorDir idet
         // den når topp og bunn-etasjen
         for (int i = *em_currentFloor - 1; i >= 0;
-             i--) { // Itererer gjennom lista baklengs, fra etasjen under og te
-                    // bunn
+            i--) { // Itererer gjennom lista baklengs, fra etasjen under og te
+                   // bunn
             if (em_queueDown[i] != 0) {
                 *em_nextFloor = i;
                 return;
@@ -181,7 +190,8 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
 };
 
 // Printer køen og nextFloor til terminalen for enklere debugging
-void em_printQueue(int* em_nextFloor, int* em_currentFloor, int* motorDirection, int* em_queueUp, int* em_queueDown) {
+void em_printQueue(int* em_nextFloor, int* em_currentFloor, int* motorDirection,
+    int* em_queueUp, int* em_queueDown) {
     printf("nF: %d   |   ", *em_nextFloor);
     printf("cF: %d   |   ", *em_currentFloor);
     printf("mD: %d   |   ", *motorDirection);

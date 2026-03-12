@@ -16,6 +16,11 @@ int main() {
     int em_queueUp[N_FLOORS];
     int em_queueDown[N_FLOORS];
 
+    // NBNB! For bedre heis. Istedenfor alle disse verdiene som sendes inn i
+    // basically alle funksjonene så lager vi heller en typedef enum elrno
+    // (struct for array?) som er heisen vår, med alle variablene vi ellers
+    // sender rundt omkring
+
     em_clear(em_queueUp, em_queueDown);
 
     state_startUp();
