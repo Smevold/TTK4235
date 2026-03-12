@@ -20,6 +20,7 @@ void state_startUp() {
 
         floor = elevio_floorSensor();
 
+        // Bruker denne dersom heisen skal kunne stoppes under initialisering
         /* if (elevio_stopButton() == 1) { // Hvis stoppknapp blir initiert
             elevio_motorDirection(DIRN_STOP);
             sleep(3); // Potensially change method later
@@ -28,6 +29,8 @@ void state_startUp() {
         } */
         elevio_motorDirection(DIRN_DOWN);
     }
+
+    // Bruker denne dersom heisen *ikke* skal kunne stoppes under initialisering
     elevio_motorDirection(DIRN_STOP);
 }
 
@@ -43,8 +46,8 @@ int state_stationary(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
             em_currentFloor);
         em_getCurrentFloor(em_currentFloor);
-        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
-            // em_queueDown);
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection,
+        // em_queueUp, em_queueDown);
 
         if (elevio_stopButton() == 1) {
             elevio_stopLamp(1);
@@ -93,7 +96,8 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         em_getCurrentFloor(em_currentFloor);
 
         // printf("Moving Upwards\n");
-        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection,
+        // em_queueUp,
         //     em_queueDown);
 
         em_updateQueues(em_queueUp, em_queueDown);
@@ -119,7 +123,8 @@ int state_move(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         em_getCurrentFloor(em_currentFloor);
 
         // printf("Moving Downwards\n");
-        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection,
+        // em_queueUp,
         //     em_queueDown);
 
         em_updateQueues(em_queueUp, em_queueDown);
@@ -166,7 +171,8 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
 
     mDirStop(motorDirection);
 
-    // printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start, t_end);
+    // printf("The time is now: %lu\nAnd the time will be: %lu\n", t_start,
+    // t_end);
 
     em_clearCurrentFloor(em_currentFloor, em_queueUp, em_queueDown);
 
@@ -183,7 +189,8 @@ int state_openDoor(int* em_queueUp, int* em_queueDown, int* em_nextFloor,
         // printf("The time is now: %lu\n", t_start);
 
         em_updateQueues(em_queueUp, em_queueDown);
-        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection, em_queueUp,
+        // em_printQueue(em_nextFloor, em_currentFloor, motorDirection,
+        // em_queueUp,
         //     em_queueDown);
         em_getNextFloor(em_nextFloor, em_queueUp, em_queueDown, motorDirection,
             em_currentFloor);

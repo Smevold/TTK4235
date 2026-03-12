@@ -40,7 +40,7 @@ void em_getCurrentFloor(int* em_currentFloor);
 void em_clearCurrentFloor(int* em_currentFloor, int* em_queueUp, int* em_queueDown);
 
 /**
-* 
+* @brief Legger knappetrykk inn i heiskøene
 */
 void em_updateQueues(int* em_queueUp, int* em_queueDown);
 
