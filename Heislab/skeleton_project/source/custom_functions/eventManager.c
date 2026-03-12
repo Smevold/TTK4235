@@ -23,8 +23,7 @@ void em_checkBtnPressed(int* floor, int* btn) {
 
             // Endrer verdi kun dersom en knapp blir trykket på
             if (btnPressed == 1) {
-                // Skrur på etasjelyset NB! Kan hende det fysiske etasjelyset må
-                // skrus av manuelt!!
+                // Skrur på etasjelyset
                 elevio_buttonLamp(f, b, btnPressed);
 
                 *floor = f;
@@ -46,8 +45,7 @@ void em_getCurrentFloor(int* em_currentFloor) {
     }
 }
 
-// Skal fjerne etasjen fra køen idet den når en etasje, ikke oftere! (kan være
-// vanskelig med vår implementasjon?)
+// Skal fjerne etasjen fra køen idet den når en etasje, skrur også av lys
 void em_clearCurrentFloor(
     int* em_currentFloor, int* em_queueUp, int* em_queueDown) {
     // Clears queue for both directions
@@ -57,9 +55,6 @@ void em_clearCurrentFloor(
     // Skrur av lysene i etasjen
     lights_floorOffCurrent(em_currentFloor);
 }
-
-// int* em_queueUp[4] = {0,0,0,0};
-// int* em_queueDown[4] = {0,0,0,0};
 
 // Oppdaterer køene, burde kjøres kontinuerlig for denne er den som merker om en
 // knapp blir trykket
@@ -102,20 +97,10 @@ void em_updateQueues(int* em_queueUp, int* em_queueDown) {
     }
 }
 
-// int* em_queueUp[4] = {0,0,0,0};
-// int* em_queueDown[4] = {0,0,0,0};
-
 // Endrer nextFloor til den neste etasjen, ved å se gjennom listene basert på
 // heisens lokasjon og retning
 void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
     int* motorDirection, int* em_currentFloor) {
-    // nextFloor er neste etasje
-    // em_queueUp er køen oppover
-    // em_queueDown er køen nedover
-    // motorDir er retningen til motoren (må kun være 0 dersom køen er tom)
-    //          den skal altså ikke være 0 fordi den står stille i en etasje og
-    //          venter
-
     // Vil nå sjekke listene for å finne neste etasje
     // Tar nextFloor fra begge køene, dersom køene er tomme fra før
     if (*em_nextFloor == -1) {
@@ -138,9 +123,6 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
         }
     } else if ((*motorDirection == -1) && (*em_currentFloor != 0)) {
         // Heisen er på vei nedover og den er ikke i siste etasje,
-        // ekstrasjekken er for å ikke iterere utenfor arrayet,
-        // kan det skape problemer? Pass på å bytte motorDir idet
-        // den når topp og bunn-etasjen
         for (int i = *em_currentFloor - 1; i >= 0;
             i--) { // Itererer gjennom lista baklengs, fra etasjen under og te
                    // bunn
@@ -185,7 +167,7 @@ void em_getNextFloor(int* em_nextFloor, int* em_queueUp, int* em_queueDown,
         }
     }
 
-    // I teorien er det nå ingen bestillinger
+    // Det er ingen bestillinger
     *em_nextFloor = -1;
 };
 
