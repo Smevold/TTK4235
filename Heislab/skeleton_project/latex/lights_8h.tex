@@ -1,0 +1,65 @@
+\doxysection{source/custom\+\_\+functions/lights.h File Reference}
+\hypertarget{lights_8h}{}\label{lights_8h}\index{source/custom\_functions/lights.h@{source/custom\_functions/lights.h}}
+
+
+Funksjoner for å skru av og på spesifikke lys.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}../driver/elevio.\+h"{}}\newline
+Include dependency graph for lights.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{lights_8h_a93cc6ce6207182d1af3f57cc06f11732}{lights\+\_\+floor\+Off\+Current}} (int \texorpdfstring{$\ast$}{*}em\+\_\+current\+Floor)
+\begin{DoxyCompactList}\small\item\em Skrur av alle bestillingslysene i gjeldende etasje. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{lights_8h_a4f0e796450b83ee1549cb2f35f246c29}{lights\+\_\+floor\+Off\+All}} ()
+\begin{DoxyCompactList}\small\item\em Skrur av alle bestillingslysene i alle etasjer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Funksjoner for å skru av og på spesifikke lys. 
+
+
+
+Definition in file \mbox{\hyperlink{lights_8h_source}{lights.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{lights_8h_a4f0e796450b83ee1549cb2f35f246c29}\label{lights_8h_a4f0e796450b83ee1549cb2f35f246c29} 
+\index{lights.h@{lights.h}!lights\_floorOffAll@{lights\_floorOffAll}}
+\index{lights\_floorOffAll@{lights\_floorOffAll}!lights.h@{lights.h}}
+\doxysubsubsection{\texorpdfstring{lights\_floorOffAll()}{lights\_floorOffAll()}}
+{\footnotesize\ttfamily void lights\+\_\+floor\+Off\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Skrur av alle bestillingslysene i alle etasjer. 
+
+
+
+Definition at line \mbox{\hyperlink{lights_8c_source_l00010}{10}} of file \mbox{\hyperlink{lights_8c_source}{lights.\+c}}.
+
+\Hypertarget{lights_8h_a93cc6ce6207182d1af3f57cc06f11732}\label{lights_8h_a93cc6ce6207182d1af3f57cc06f11732} 
+\index{lights.h@{lights.h}!lights\_floorOffCurrent@{lights\_floorOffCurrent}}
+\index{lights\_floorOffCurrent@{lights\_floorOffCurrent}!lights.h@{lights.h}}
+\doxysubsubsection{\texorpdfstring{lights\_floorOffCurrent()}{lights\_floorOffCurrent()}}
+{\footnotesize\ttfamily void lights\+\_\+floor\+Off\+Current (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{em\+\_\+current\+Floor }\end{DoxyParamCaption})}
+
+
+
+Skrur av alle bestillingslysene i gjeldende etasje. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Pass-\/by-\/reference} & gjeldende etasje \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{lights_8c_source_l00003}{3}} of file \mbox{\hyperlink{lights_8c_source}{lights.\+c}}.
+

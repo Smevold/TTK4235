@@ -1,0 +1,28 @@
+\doxysection{timer.\+c}
+\hypertarget{timer_8c_source}{}\label{timer_8c_source}\index{source/custom\_functions/timer.c@{source/custom\_functions/timer.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}timer.h"{}}}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <sys/time.h>}}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00003}00003\ \textcolor{comment}{//\ \#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00005}00005\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ get\_wall\_time(\textcolor{keywordtype}{void})\{}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00006}00006\ \ \ \ \ \textcolor{keyword}{struct\ }timeval\ time;}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00007}00007\ \ \ \ \ gettimeofday(\&time,\ NULL);}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00008}00008\ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{double})time.tv\_sec\ +\ (double)time.tv\_usec\ *\ .000001;}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00009}00009\ \}}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00011}00011\ \textcolor{keywordtype}{void}\ timer\_start(clock\_t*\ pt\_start,clock\_t*\ pt\_end)\{}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00012}00012\ \ \ \ \ *pt\_start\ =\ get\_wall\_time();}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00013}00013\ \ \ \ \ *pt\_end\ =\ *pt\_start\ +\ 3;}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00016}00016\ \textcolor{keywordtype}{int}\ timer\_isTimeOut(clock\_t\ *pt\_start,clock\_t\ *pt\_end)\{}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00017}00017\ \ \ \ \ *pt\_start\ =\ get\_wall\_time();}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{if}\ (*pt\_end\ <=\ *pt\_start)\{}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{timer_8c_source_l00022}00022\ \}}
+
+\end{DoxyCode}

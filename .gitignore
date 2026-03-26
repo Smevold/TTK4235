@@ -2,3 +2,7 @@ Heislab/TTK4235_Heislab/.obsidian/workspace.json
 /Heislab/TTK4235_Heislab/.obsidian
 skeleton_project/.vscode/
 /.vscode/
+*.o
+Heislab/skeleton_project/build/
+/Heislab/skeleton_project/elevator
+/Heislab/skeleton_project/build
