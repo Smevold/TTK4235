@@ -3,29 +3,39 @@
 skinparam ClassAttributeIconSize 0
 
 class Event_Manager {
-    + em_cue : Int[*]
+    + em_queueUp : Int[*]
+    + em_queueDown : Int[*]
     + em_nextFloor : Int
     + em_currentFloor : Int
-    - em_getNextFloor() : Int
+    + em_clear()
+    + em_checkButtonPressed()
+    + em_getCurrentFloor() : Int
+    + em_getNextFloor() : Int
+    + em_clearCurrentFloor()
+    + em_updateQueues()
+    + em_printQueues()
 }
 
 class Tilstandsmaskin {
     - state
-    + sm_evStop()
-    + sm_evObstruction()
-    + sm_evNoOrders()
-    + sm_evDoorOpen()
+    - elevio_init()
+    + motorDirection: Int
+    + state_startUp()
+    + state_stationary() : Int
+    + state_move() : Int
+    + state_openDoor() : Int
 }
 
 class Aktuator {
     + MotorDirection : enum[3]
     + elevio_motorDirection(dirn: MotorDirection)
+    + mDirUp()
+    + mDirDown()
+    + mDirStop()
 }
 
 class Elevator{
     - main()
-    - elevio_init()
-    - elev_startUp()
 }
 
 class Sensorer{
@@ -35,10 +45,11 @@ class Sensorer{
 }
 
 class Timer{
-    - timer_time: int
+    - t_start : clock_t
+    - t_end : clock_t
+    - timer_getTime() : Double
     + timer_start()
-    + timer_isTimeOut()
-    + timer_reset()
+    + timer_isTimeOut() : Int
 }
 
 class Lys{
@@ -47,6 +58,8 @@ class Lys{
     + elevio_floorIndicator(floor: int)
     + elevio_doorOpenLamp(value: int)
     + elveio_stopLamp(value: int)
+    + lights_floorOffCurrent(em_currentFloor: int*)
+    + lights_floorOffAll()
 }
 
 class Etasje_Knapp{
