@@ -9,6 +9,8 @@ char * gronnsaker(unsigned int taco_points);
 char * taco_lefse(unsigned int taco_points);
 char * drikke(unsigned int taco_points);
 
+// HALLO
+
 void print_custom_taco_recipe(char * name, int taco_points){
     printf("\n%s sin spesielle tacooppskrift (krever %d tacopoeng!):\n", name,taco_points);
     printf(" - Tacokrydder:\n      \"");
