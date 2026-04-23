@@ -1,6 +1,7 @@
 #ifndef PPI_H
 #define PPI_H
 #include <stdint.h>
+#include "gpiote.h"
 
 #define PPI ((NRF_PPI_REG*)0x4001F000)
 
@@ -26,6 +27,10 @@ typedef struct {
 	volatile PPI_CHANNEL_TYPE PPI_CH[16];
 	volatile uint32_t RESERVED2[156];
 	volatile uint32_t CHG[4];
+	volatile uint32_t RESERVED3[64];
+	volatile uint32_t FORKTEP[32];
 } NRF_PPI_REG;
 
 #endif
+
+void channel_init();
